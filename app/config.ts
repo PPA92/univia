@@ -28,6 +28,7 @@ export const assetConfig = {
     'https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=1200&q=85',
   assistance:
     'https://images.unsplash.com/photo-1542296332-2e4473faf563?auto=format&fit=crop&w=1200&q=85',
+  footerBackground: '/footer-pattern.svg',
   socialShare: '/social-share.svg',
 } as const;
 

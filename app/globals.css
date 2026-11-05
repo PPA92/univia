@@ -86,7 +86,7 @@ button { cursor: pointer; }
 .faq-answer { padding: 0 22px 22px; }
 .faq-answer p { margin: 0; color: var(--muted); line-height: 1.7; }
 
-.site-footer { margin-top: 80px; color: #dce8f5; background: var(--navy); }
+.site-footer { margin-top: 80px; color: #dce8f5; background-color: var(--navy); background-position: center, right center; background-repeat: no-repeat; background-size: cover, 520px 520px; }
 .footer-grid { display: grid; grid-template-columns: 1.4fr 1fr 1.2fr; gap: 48px; padding-block: 58px; }
 .footer-tagline { margin: 16px 0 0; color: #9fc5ee; }
 .footer-grid h2 { margin: 0 0 15px; color: white; font-size: 1rem; }

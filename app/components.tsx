@@ -20,7 +20,7 @@ import {
   X,
   type LucideIcon,
 } from 'lucide-react';
-import { buildMailtoUrl, buildWhatsAppUrl, contactConfig, siteConfig } from './config';
+import { assetConfig, buildMailtoUrl, buildWhatsAppUrl, contactConfig, siteConfig } from './config';
 import { destinations, faqs, services, type FAQItem, type LocalizedText } from './data';
 import { getTranslations, languageLabels, type Language } from './i18n';
 
@@ -119,7 +119,7 @@ export function SiteFooter() {
   const { language } = useAppLanguage();
   const t = getTranslations(language);
   return (
-    <footer className="site-footer">
+    <footer className="site-footer" style={{ backgroundImage: `linear-gradient(110deg, rgb(16 42 67 / .98), rgb(16 42 67 / .9)), url(${assetConfig.footerBackground})` }}>
       <div className="container footer-grid">
         <div>
           <Image src="/logo-dark.svg" width={176} height={45} alt="UNIVIA logo" />

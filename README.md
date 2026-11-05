@@ -33,7 +33,7 @@ Before launch, review `app/config.ts` and replace every visible placeholder:
 
 Unknown company information stays in one configuration module. Do not add claims that have not been supplied and approved. The English/Myanmar UI copy is centralized in `app/i18n.ts`; static destination, service, FAQ, benefit, promo, and placeholder-testimonial records are in `app/data.ts`.
 
-The temporary SVG assets are `public/logo-light.svg`, `public/logo-dark.svg`, `public/favicon.svg`, and `public/social-share.svg`. Replace them with approved brand assets when available. No airline marks are included.
+The temporary SVG assets are `public/logo-light.svg`, `public/logo-dark.svg`, `public/favicon.svg`, `public/footer-pattern.svg`, and `public/social-share.svg`. Replace them with approved brand assets when available. No airline marks are included.
 
 ## Images and licensing
 
