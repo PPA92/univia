@@ -1,3 +1,24 @@
-import type { Metadata } from 'next';import Image from 'next/image';import Link from 'next/link';import './globals.css';
-export const metadata:Metadata={title:{default:'UNIVIA | Your Journey. Our Commitment.',template:'%s | UNIVIA'},description:'Premium travel and airline ticket inquiry support from UNIVIA.',openGraph:{title:'UNIVIA Travel',description:'Your Journey. Our Commitment.',images:['/logo.svg']},twitter:{card:'summary_large_image',images:['/logo.svg']}};
-export default function Layout({children}:{children:React.ReactNode}){return <html lang="en"><body><header className="bg-white/95 sticky top-0 z-20 border-b"><div className="container h-20 flex items-center justify-between"><Link href="/"><Image src="/logo.svg" width={150} height={40} alt="UNIVIA"/></Link><nav className="hidden md:flex gap-7 items-center text-sm font-semibold"><Link href="/about">About</Link><Link href="/air-tickets">Air Tickets</Link><Link href="/destinations">Destinations</Link><Link href="/services">Services</Link><Link href="/faq">FAQ</Link><Link className="bg-blue text-white px-4 py-2 rounded-full" href="/contact">Contact</Link></nav><button className="md:hidden text-2xl" aria-label="Open menu">☰</button></div></header>{children}<footer className="bg-navy text-white mt-20"><div className="container py-12 grid md:grid-cols-3 gap-8"><div><Image src="/logo.svg" width={150} height={40} alt="UNIVIA logo"/><p className="text-blue-100 mt-4">Your Journey. Our Commitment.</p></div><div><h3 className="font-bold">Explore</h3><div className="flex flex-col gap-2 mt-3 text-blue-100"><Link href="/destinations">Destinations</Link><Link href="/services">Services</Link><Link href="/faq">FAQs</Link></div></div><div><h3 className="font-bold">Configurable contact</h3><p className="text-blue-100 mt-3">WhatsApp: +95 XXX XXX XXX<br/>Email: hello@example.com</p></div></div><div className="border-t border-white/10 text-center py-5 text-sm text-blue-100">© {new Date().getFullYear()} Univia Co.,Ltd. Placeholder contact details require configuration.</div></footer></body></html>}
+import type { Metadata } from 'next';
+import './globals.css';
+import { assetConfig, siteConfig } from './config';
+import { SiteShell } from './components';
+
+export const metadata: Metadata = {
+  metadataBase: new URL(siteConfig.publicUrl),
+  title: { default: `${siteConfig.brandName} | ${siteConfig.tagline}`, template: `%s | ${siteConfig.brandName}` },
+  description: siteConfig.description,
+  icons: { icon: '/favicon.svg', shortcut: '/favicon.svg' },
+  openGraph: {
+    type: 'website',
+    siteName: siteConfig.brandName,
+    title: `${siteConfig.brandName} | ${siteConfig.tagline}`,
+    description: siteConfig.description,
+    url: siteConfig.publicUrl,
+    images: [{ url: assetConfig.socialShare, width: 1200, height: 630, alt: `${siteConfig.brandName} travel and airline ticketing` }],
+  },
+  twitter: { card: 'summary_large_image', title: siteConfig.brandName, description: siteConfig.description, images: [assetConfig.socialShare] },
+};
+
+export default function Layout({ children }: { children: React.ReactNode }) {
+  return <html lang="en"><body><SiteShell>{children}</SiteShell></body></html>;
+}
