@@ -42,8 +42,8 @@ export const services: Service[] = [
 
 export const processSteps = [
   { id: 'share', title: { en: 'Share the route', my: 'လမ်းကြောင်းမျှဝေပါ' }, text: { en: 'Tell us where you are starting, where you want to go and when.', my: 'ဘယ်နေရာမှစမည်၊ ဘယ်နေရာသွားမည်နှင့် ဘယ်အချိန်ကို ပြောပြပါ။' }, image: travelPhotos.process },
-  { id: 'review', title: { en: 'Review the options', my: 'ရွေးချယ်စရာများကို ပြန်လည်ကြည့်ပါ' }, text: { en: 'Continue the conversation through a configured inquiry channel.', my: 'ပြင်ဆင်ထားသော မေးမြန်းမှုလမ်းကြောင်းမှ ဆက်လက်ဆွေးနွေးပါ။' }, image: travelPhotos.services.assistance },
-  { id: 'decide', title: { en: 'Choose the next step', my: 'နောက်တစ်ဆင့်ရွေးပါ' }, text: { en: 'Use the information you confirm to decide what happens next.', my: 'အတည်ပြုထားသောအချက်အလက်ဖြင့် နောက်တစ်ဆင့်ကို ဆုံးဖြတ်ပါ။' }, image: travelPhotos.about },
+  { id: 'review', title: { en: 'Review the options', my: 'ရွေးချယ်စရာများကို ပြန်လည်ကြည့်ပါ' }, text: { en: 'Continue the conversation through a configured inquiry channel.', my: 'ပြင်ဆင်ထားသော မေးမြန်းမှုလမ်းကြောင်းမှ ဆက်လက်ဆွေးနွေးပါ။' }, image: travelPhotos.services.review },
+  { id: 'decide', title: { en: 'Choose the next step', my: 'နောက်တစ်ဆင့်ရွေးပါ' }, text: { en: 'Use the information you confirm to decide what happens next.', my: 'အတည်ပြုထားသောအချက်အလက်ဖြင့် နောက်တစ်ဆင့်ကို ဆုံးဖြတ်ပါ။' }, image: travelPhotos.services.decide },
 ];
 
 export const faqs: FAQItem[] = [

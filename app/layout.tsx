@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-css-tags */
 import type { Metadata, Viewport } from 'next';
 import './globals.css';
 import { assetConfig, siteConfig } from './config';
@@ -14,4 +15,4 @@ export const metadata: Metadata = {
   twitter: { card: 'summary_large_image', title: `${siteConfig.brandName} | ${siteConfig.tagline}`, description: siteConfig.description, images: [assetConfig.socialShare] },
 };
 export const viewport: Viewport = { themeColor: '#032773', colorScheme: 'light' };
-export default function Layout({ children }: { children: React.ReactNode }) { return <html lang="en" data-type="service" data-radius="soft" data-buttons="solid" data-motion="quiet"><head><meta name="page-type" content="service" /><meta name="site-kind" content="other" /></head><body><SiteShell>{children}</SiteShell></body></html>; }
+export default function Layout({ children }: { children: React.ReactNode }) { return <html lang="en" data-type="service" data-radius="soft" data-buttons="solid" data-motion="quiet"><head><meta name="page-type" content="service" /><meta name="site-kind" content="other" /><link rel="stylesheet" href="/motion.css" /></head><body><SiteShell>{children}</SiteShell></body></html>; }

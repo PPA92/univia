@@ -17,11 +17,13 @@ Production checks:
 npm run typecheck
 npm run lint
 npm run build
-npm run start
-npm run check:static
+npm run start -- --hostname 127.0.0.1 --port 3100
+STATIC_CHECK_URL=http://127.0.0.1:3100 npm run check:static
 ```
 
-`check:static` expects the production server at `http://127.0.0.1:3000`. Set `STATIC_CHECK_URL` when using another local port. The build statically prerenders the seven requested pages, `robots.txt`, and `sitemap.xml`.
+`check:static` expects the production server at `http://127.0.0.1:3000` by default. Set `STATIC_CHECK_URL` when using another local port. It checks 200 responses, canonical URLs, title/description, Open Graph and Twitter tags for all seven routes, plus every sitemap entry and the robots sitemap reference. The build statically prerenders the seven requested pages, `robots.txt`, and `sitemap.xml`.
+
+For visual QA, serve the production result over HTTP and run the installed Design Taste checks one route at a time at 1440, 1024, 820, 768, and 390. Use `consistency.mjs`, `assets/layout/check.mjs`, `shoot.mjs`, and `perf.mjs` without `file://` or `--no-stress`. Browser flow coverage should exercise destination prefill, invalid and valid forms, configured URL generation, language switching, keyboard menu behavior, and reduced motion. A headless browser runner is required for those interaction checks.
 
 ## Configuration
 

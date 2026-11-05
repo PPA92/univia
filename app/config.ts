@@ -34,6 +34,7 @@ export const travelPhotos = {
   about: { id: 'about-travelers', url: unsplash('photo-1527631746610-bca00a040d60'), subject: 'travelers on a mountain route' },
   process: { id: 'process-map', url: unsplash('photo-1488646953014-85cb44e25828'), subject: 'open travel map' },
   contact: { id: 'contact-terminal', url: unsplash('photo-1542296332-2e4473faf563'), subject: 'aircraft at a terminal' },
+  destinationHero: { id: 'destination-bridge', url: unsplash('photo-1493976040374-85c8e12f0c0e'), subject: 'city bridge and skyline' },
   destinations: {
     bangkok: { id: 'bangkok-city', url: unsplash('photo-1508009603885-50cf7c579365', 1000), subject: 'Bangkok city and temple roof' },
     singapore: { id: 'singapore-skyline', url: unsplash('photo-1525625293386-3f8f99389edd', 1000), subject: 'Singapore skyline' },
@@ -46,10 +47,12 @@ export const travelPhotos = {
     mandalay: { id: 'mandalay-temple', url: unsplash('photo-1548013146-72479768bada', 1000), subject: 'Mandalay temple architecture' },
   },
   services: {
-    domestic: { id: 'domestic-flight', url: unsplash('photo-1436491865332-7a61a109cc05', 1200), subject: 'aircraft in flight' },
-    international: { id: 'international-route', url: unsplash('photo-1488646953014-85cb44e25828', 1200), subject: 'travel map and passport' },
+    domestic: { id: 'domestic-flight', url: unsplash('photo-1556388158-158ea5ccacbd', 1200), subject: 'aircraft at a gate' },
+    international: { id: 'international-route', url: unsplash('photo-1494783367193-149034c05e8f', 1200), subject: 'road through a mountain route' },
     corporate: { id: 'corporate-travel', url: unsplash('photo-1556761175-b413da4baf72', 1200), subject: 'travel planning desk' },
-    assistance: { id: 'travel-assistance', url: unsplash('photo-1542296332-2e4473faf563', 1200), subject: 'aircraft at the gate' },
+    assistance: { id: 'travel-assistance', url: unsplash('photo-1529070538774-1843cb3265df', 1200), subject: 'travel documents on a desk' },
+    review: { id: 'review-options', url: unsplash('photo-1452421822248-d4c2b47f0c81', 1200), subject: 'route notes and a compass' },
+    decide: { id: 'decide-route', url: unsplash('photo-1473445361085-b9a07f55608b', 1200), subject: 'path through a forest' },
   },
 } as const;
 
@@ -70,9 +73,10 @@ export const assetConfig = {
 
 export function isWhatsAppConfigured(): boolean { return contactConfig.whatsappNumber.trim().length > 0; }
 export function isEmailConfigured(): boolean { return contactConfig.email.trim().length > 0; }
+function normaliseWhatsAppNumber(): string { return contactConfig.whatsappNumber.replace(/[^\d]/g, ''); }
 export function buildWhatsAppUrl(message: string): string {
   if (!isWhatsAppConfigured()) return '';
-  return `https://wa.me/${contactConfig.whatsappNumber}?text=${encodeURIComponent(message)}`;
+  return `https://wa.me/${normaliseWhatsAppNumber()}?text=${encodeURIComponent(message)}`;
 }
 export function buildMailtoUrl(subject: string, body: string): string {
   if (!isEmailConfigured()) return '';
