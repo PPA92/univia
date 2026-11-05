@@ -39,6 +39,11 @@ function text(value: LocalizedText, language: Language) {
   return value[language];
 }
 
+export function Translated({ value }: { value: LocalizedText }) {
+  const { language } = useAppLanguage();
+  return <>{text(value, language)}</>;
+}
+
 export function LanguageSwitcher() {
   const { language, setLanguage } = useAppLanguage();
   const t = getTranslations(language);
@@ -163,16 +168,16 @@ const iconMap: Record<string, LucideIcon> = {
   headphones: Headphones,
 };
 
-export function Cards({ kind }: { kind: 'dest' | 'service' }) {
+export function Cards({ kind, limit }: { kind: 'dest' | 'service'; limit?: number }) {
   const { language } = useAppLanguage();
   const t = getTranslations(language);
   if (kind === 'dest') {
-    return <div className="card-grid">{destinations.map((destination) => <article className="card image-card" key={destination.id}>
+    return <div className="card-grid">{destinations.slice(0, limit).map((destination) => <article className="card image-card" key={destination.id}>
       <div className="card-image"><Image src={destination.image} alt={text(destination.alt, language)} fill sizes="(max-width: 768px) 100vw, 33vw" /></div>
       <div className="card-content"><p className="card-kicker">{text(destination.country, language)}</p><h3>{text(destination.city, language)}</h3><p>{text(destination.description, language)}</p><Link className="inline-link" href="/contact">{t.common.inquire} <ArrowRight size={15} aria-hidden="true" /></Link></div>
     </article>)}</div>;
   }
-  return <div className="card-grid">{services.map((service) => { const Icon = iconMap[service.icon]; return <article className="card service-card" key={service.id}>
+  return <div className="card-grid">{services.slice(0, limit).map((service) => { const Icon = iconMap[service.icon]; return <article className="card service-card" key={service.id}>
     {service.image ? <div className="card-image"><Image src={service.image} alt={text(service.title, language)} fill sizes="(max-width: 768px) 100vw, 33vw" /></div> : <div className="service-icon"><Icon aria-hidden="true" /></div>}
     <div className="card-content"><h3>{text(service.title, language)}</h3><p>{text(service.description, language)}</p><Link className="inline-link" href="/contact">{t.common.inquire} <ArrowRight size={15} aria-hidden="true" /></Link></div>
   </article>; })}</div>;
@@ -278,9 +283,14 @@ export function FAQ() {
   return <FAQAccordion items={faqs} language={language} openId={openId} onToggle={(id) => setOpenId((current) => current === id ? null : id)} />;
 }
 
-export function FAQAccordion({ items, language, openId, onToggle }: { items: FAQItem[]; language: Language; openId?: string | null; onToggle?: (id: string) => void }) {
-  return <div className="faq-list">{items.map((item) => { const open = openId === item.id; return <div className="faq-item card" key={item.id}>
-    <button type="button" className="faq-question" aria-expanded={open} aria-controls={`faq-answer-${item.id}`} onClick={() => onToggle?.(item.id)}><span>{text(item.question, language)}</span><ChevronDown className={open ? 'rotate' : ''} size={20} aria-hidden="true" /></button>
-    <div id={`faq-answer-${item.id}`} className={open ? 'faq-answer open' : 'faq-answer'} hidden={!open}><p>{text(item.answer, language)}</p></div>
+export function FAQAccordion({ items, language, openId, onToggle }: { items: FAQItem[]; language?: Language; openId?: string | null; onToggle?: (id: string) => void }) {
+  const context = useAppLanguage();
+  const activeLanguage = language ?? context.language;
+  const [internalOpenId, setInternalOpenId] = useState<string | null>(null);
+  const currentOpenId = openId === undefined ? internalOpenId : openId;
+  const toggle = onToggle ?? ((id: string) => setInternalOpenId((current) => current === id ? null : id));
+  return <div className="faq-list">{items.map((item) => { const open = currentOpenId === item.id; return <div className="faq-item card" key={item.id}>
+    <button type="button" className="faq-question" aria-expanded={open} aria-controls={`faq-answer-${item.id}`} onClick={() => toggle(item.id)}><span>{text(item.question, activeLanguage)}</span><ChevronDown className={open ? 'rotate' : ''} size={20} aria-hidden="true" /></button>
+    <div id={`faq-answer-${item.id}`} className={open ? 'faq-answer open' : 'faq-answer'} hidden={!open}><p>{text(item.answer, activeLanguage)}</p></div>
   </div>; })}</div>;
 }
