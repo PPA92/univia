@@ -2,7 +2,8 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { createContext, useContext, useState, type FormEvent, type ReactNode } from 'react';
+import { createContext, useContext, useEffect, useState, type FormEvent, type ReactNode } from 'react';
+import { usePathname } from 'next/navigation';
 import {
   ArrowRight,
   BriefcaseBusiness,
@@ -20,7 +21,7 @@ import {
   X,
   type LucideIcon,
 } from 'lucide-react';
-import { assetConfig, buildMailtoUrl, buildWhatsAppUrl, contactConfig, siteConfig } from './config';
+import { assetConfig, buildMailtoUrl, buildWhatsAppUrl, contactConfig, isEmailConfigured, isWhatsAppConfigured, siteConfig } from './config';
 import { destinations, faqs, services, type FAQItem, type LocalizedText } from './data';
 import { getTranslations, languageLabels, type Language } from './i18n';
 
@@ -28,6 +29,21 @@ const languageContext = createContext<{ language: Language; setLanguage: (langua
 
 export function AppLanguageProvider({ children }: { children: ReactNode }) {
   const [language, setLanguage] = useState<Language>('en');
+  const pathname = usePathname();
+  const translationsForLanguage = getTranslations(language);
+
+  useEffect(() => {
+    document.documentElement.lang = language === 'my' ? 'my' : 'en';
+    const route = translationsForLanguage.metadata.routes[pathname] ?? translationsForLanguage.metadata.routes['/'];
+    document.title = route.title;
+    document.querySelector('meta[name="description"]')?.setAttribute('content', route.description);
+    document.querySelector('meta[property="og:locale"]')?.setAttribute('content', translationsForLanguage.metadata.locale);
+    document.querySelector('meta[property="og:title"]')?.setAttribute('content', route.title);
+    document.querySelector('meta[property="og:description"]')?.setAttribute('content', route.description);
+    document.querySelector('meta[name="twitter:title"]')?.setAttribute('content', route.title);
+    document.querySelector('meta[name="twitter:description"]')?.setAttribute('content', route.description);
+  }, [language, pathname, translationsForLanguage]);
+
   return <languageContext.Provider value={{ language, setLanguage }}>{children}</languageContext.Provider>;
 }
 
@@ -96,7 +112,7 @@ export function SiteHeader() {
             className="menu-toggle"
             type="button"
             aria-expanded={menuOpen}
-            aria-controls="mobile-navigation"
+            aria-controls={menuOpen ? 'mobile-navigation' : undefined}
             aria-label={menuOpen ? t.common.closeMenu : t.common.openMenu}
             onClick={() => setMenuOpen((open) => !open)}
           >
@@ -104,13 +120,13 @@ export function SiteHeader() {
           </button>
         </div>
       </div>
-      <div id="mobile-navigation" className={menuOpen ? 'mobile-nav open' : 'mobile-nav'}>
+      {menuOpen && <div id="mobile-navigation" className="mobile-nav open">
         <nav aria-label="Mobile navigation">
           <Link href="/" onClick={closeMenu}>{t.navigation.home}</Link>
           {navItems.map(([label, href]) => <Link href={href} key={href} onClick={closeMenu}>{t.navigation[label]}</Link>)}
           <Link className="nav-cta" href="/contact" onClick={closeMenu}>{t.navigation.contact}</Link>
         </nav>
-      </div>
+      </div>}
     </header>
   );
 }
@@ -136,8 +152,8 @@ export function SiteFooter() {
         <div>
           <h2>{t.footer.contact}</h2>
           <div className="footer-contact">
-            <a href={`https://wa.me/${contactConfig.whatsappNumber}`}><MessageCircle aria-hidden="true" /> {contactConfig.phoneDisplay}</a>
-            <a href={`mailto:${contactConfig.email}`}><Mail aria-hidden="true" /> {contactConfig.email}</a>
+            {isWhatsAppConfigured() ? <a href={`https://wa.me/${contactConfig.whatsappNumber}`}><MessageCircle aria-hidden="true" /> {contactConfig.phoneDisplay}</a> : <span className="contact-placeholder"><MessageCircle aria-hidden="true" /> {contactConfig.phoneDisplay}</span>}
+            {isEmailConfigured() ? <a href={`mailto:${contactConfig.email}`}><Mail aria-hidden="true" /> {contactConfig.email}</a> : <span className="contact-placeholder"><Mail aria-hidden="true" /> {contactConfig.emailPlaceholder}</span>}
           </div>
           <p>{t.footer.placeholder}</p>
         </div>
@@ -192,6 +208,7 @@ export function Inquiry() {
   const t = getTranslations(language);
   const [trip, setTrip] = useState<'oneWay' | 'roundTrip'>('roundTrip');
   const [errors, setErrors] = useState<InquiryErrors>({});
+  const [configurationError, setConfigurationError] = useState(false);
   const [resultUrl, setResultUrl] = useState('');
 
   function submit(event: FormEvent<HTMLFormElement>) {
@@ -213,7 +230,12 @@ export function Inquiry() {
     if (!travelClass) nextErrors.class = t.inquiry.errors.travelClass;
     setErrors(nextErrors);
     setResultUrl('');
+    setConfigurationError(false);
     if (Object.keys(nextErrors).length > 0) return;
+    if (!isWhatsAppConfigured()) {
+      setConfigurationError(true);
+      return;
+    }
 
     const message = [
       `${siteConfig.brandName} Flight Inquiry`,
@@ -233,8 +255,8 @@ export function Inquiry() {
   const fieldError = (field: InquiryField) => errors[field] ? <p className="field-error" id={`${field}-error`} role="alert">{errors[field]}</p> : null;
   return <form onSubmit={submit} className="inquiry-form card" noValidate>
     <div className="form-heading"><div><p className="eyebrow">{siteConfig.brandName}</p><h2>{t.inquiry.title}</h2></div><div className="trip-toggle" role="group" aria-label="Trip type">
-      <button type="button" className={trip === 'oneWay' ? 'active' : ''} aria-pressed={trip === 'oneWay'} onClick={() => { setTrip('oneWay'); setErrors({}); }}>{t.inquiry.oneWay}</button>
-      <button type="button" className={trip === 'roundTrip' ? 'active' : ''} aria-pressed={trip === 'roundTrip'} onClick={() => { setTrip('roundTrip'); setErrors({}); }}>{t.inquiry.roundTrip}</button>
+      <button type="button" className={trip === 'oneWay' ? 'active' : ''} aria-pressed={trip === 'oneWay'} onClick={() => { setTrip('oneWay'); setErrors({}); setConfigurationError(false); }}>{t.inquiry.oneWay}</button>
+      <button type="button" className={trip === 'roundTrip' ? 'active' : ''} aria-pressed={trip === 'roundTrip'} onClick={() => { setTrip('roundTrip'); setErrors({}); setConfigurationError(false); }}>{t.inquiry.roundTrip}</button>
     </div></div>
     <div className="form-grid">
       <div className="field"><label htmlFor="from">{t.inquiry.from}</label><input id="from" name="from" autoComplete="off" aria-invalid={Boolean(errors.from)} aria-describedby={errors.from ? 'from-error' : undefined} />{fieldError('from')}</div>
@@ -244,36 +266,49 @@ export function Inquiry() {
       <div className="field"><label htmlFor="passengers">{t.inquiry.passengers}</label><input id="passengers" name="passengers" type="number" min="1" max="9" defaultValue="1" aria-invalid={Boolean(errors.passengers)} aria-describedby={errors.passengers ? 'passengers-error' : undefined} />{fieldError('passengers')}</div>
       <div className="field"><label htmlFor="class">{t.inquiry.travelClass}</label><select id="class" name="class" defaultValue="Economy" aria-invalid={Boolean(errors.class)} aria-describedby={errors.class ? 'class-error' : undefined}><option value="Economy">{t.inquiry.economy}</option><option value="Premium Economy">{t.inquiry.premiumEconomy}</option><option value="Business">{t.inquiry.business}</option><option value="First Class">{t.inquiry.firstClass}</option></select>{fieldError('class')}</div>
     </div>
-    <button className="button button-submit" type="submit"><MessageCircle size={18} aria-hidden="true" />{t.inquiry.submit}</button>
+    <button className="button button-submit" type="submit" disabled={!isWhatsAppConfigured()}><MessageCircle size={18} aria-hidden="true" />{t.inquiry.submit}</button>
+    {!isWhatsAppConfigured() && <p className="field-error" role="status">{t.inquiry.errors.whatsappUnavailable}</p>}
+    {configurationError && <p className="field-error" role="alert">{t.inquiry.errors.whatsappUnavailable}</p>}
     {resultUrl && <p className="form-result"><a href={resultUrl} target="_blank" rel="noreferrer">{t.inquiry.generatedLink}</a></p>}
   </form>;
 }
 
+type ContactField = 'name' | 'email' | 'message';
+type ContactErrors = Partial<Record<ContactField, string>>;
+
 export function ContactInquiry() {
   const { language } = useAppLanguage();
   const t = getTranslations(language);
-  const [error, setError] = useState(false);
-  const [links, setLinks] = useState<{ whatsapp: string; mailto: string } | null>(null);
+  const [errors, setErrors] = useState<ContactErrors>({});
+  const [links, setLinks] = useState<{ whatsapp?: string; mailto?: string } | null>(null);
+  const canUseChannel = isWhatsAppConfigured() || isEmailConfigured();
   function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const form = new FormData(event.currentTarget);
     const name = String(form.get('name') ?? '').trim();
     const email = String(form.get('email') ?? '').trim();
     const message = String(form.get('message') ?? '').trim();
-    if (!name || !/^\S+@\S+\.\S+$/.test(email) || !message) { setError(true); setLinks(null); return; }
+    const nextErrors: ContactErrors = {};
+    if (!name) nextErrors.name = t.contact.errors.name;
+    if (!/^\S+@\S+\.\S+$/.test(email)) nextErrors.email = t.contact.errors.email;
+    if (!message) nextErrors.message = t.contact.errors.message;
+    setErrors(nextErrors);
+    setLinks(null);
+    if (Object.keys(nextErrors).length > 0 || !canUseChannel) return;
     const body = [`${siteConfig.brandName} Contact Inquiry`, `Name: ${name}`, `Email: ${email}`, `Message: ${message}`].join('\n');
     const whatsapp = buildWhatsAppUrl(body);
-    setError(false);
-    setLinks({ whatsapp, mailto: buildMailtoUrl(`${siteConfig.brandName} contact inquiry`, body) });
-    window.open(whatsapp, '_blank', 'noopener,noreferrer');
+    const mailto = buildMailtoUrl(`${siteConfig.brandName} contact inquiry`, body);
+    setLinks({ whatsapp: whatsapp || undefined, mailto: mailto || undefined });
+    if (whatsapp) window.open(whatsapp, '_blank', 'noopener,noreferrer');
   }
+  const fieldError = (field: ContactField) => errors[field] ? <p className="field-error" id={`contact-${field}-error`} role="alert">{errors[field]}</p> : null;
   return <form onSubmit={submit} className="contact-form card" noValidate>
-    <div className="field"><label htmlFor="contact-name">{t.contact.name}</label><input id="contact-name" name="name" autoComplete="name" aria-invalid={error} /></div>
-    <div className="field"><label htmlFor="contact-email">{t.contact.email}</label><input id="contact-email" name="email" type="email" autoComplete="email" aria-invalid={error} /></div>
-    <div className="field"><label htmlFor="contact-message">{t.contact.message}</label><textarea id="contact-message" name="message" rows={5} aria-invalid={error} /></div>
-    {error && <p className="field-error" role="alert">{t.contact.validation}</p>}
-    <button className="button button-submit" type="submit"><MessageCircle size={18} aria-hidden="true" />{t.contact.submit}</button>
-    {links && <div className="form-result" role="status"><p>{t.contact.success}</p><div className="result-links"><a href={links.whatsapp} target="_blank" rel="noreferrer"><MessageCircle size={16} aria-hidden="true" />WhatsApp</a><a href={links.mailto}><Mail size={16} aria-hidden="true" />{t.contact.mailtoAlternative}</a></div></div>}
+    <div className="field"><label htmlFor="contact-name">{t.contact.name}</label><input id="contact-name" name="name" autoComplete="name" aria-invalid={Boolean(errors.name)} aria-describedby={errors.name ? 'contact-name-error' : undefined} />{fieldError('name')}</div>
+    <div className="field"><label htmlFor="contact-email">{t.contact.email}</label><input id="contact-email" name="email" type="email" autoComplete="email" aria-invalid={Boolean(errors.email)} aria-describedby={errors.email ? 'contact-email-error' : undefined} />{fieldError('email')}</div>
+    <div className="field"><label htmlFor="contact-message">{t.contact.message}</label><textarea id="contact-message" name="message" rows={5} aria-invalid={Boolean(errors.message)} aria-describedby={errors.message ? 'contact-message-error' : undefined} />{fieldError('message')}</div>
+    {!canUseChannel && <p className="field-error" role="status">{t.contact.errors.configuration}</p>}
+    <button className="button button-submit" type="submit" disabled={!canUseChannel}><MessageCircle size={18} aria-hidden="true" />{t.contact.submit}</button>
+    {links && <div className="form-result" role="status"><p>{t.contact.success}</p><div className="result-links">{links.whatsapp && <a href={links.whatsapp} target="_blank" rel="noreferrer"><MessageCircle size={16} aria-hidden="true" />WhatsApp</a>}{links.mailto && <a href={links.mailto}><Mail size={16} aria-hidden="true" />{t.contact.mailtoAlternative}</a>}</div></div>}
   </form>;
 }
 

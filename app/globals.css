@@ -41,6 +41,8 @@ button { cursor: pointer; }
 
 .button { display: inline-flex; align-items: center; justify-content: center; gap: 9px; min-height: 46px; padding: 0 20px; border: 0; border-radius: 999px; font-weight: 750; transition: transform .2s ease, box-shadow .2s ease, background .2s ease; }
 .button:hover { transform: translateY(-2px); box-shadow: 0 12px 24px rgb(16 42 67 / .14); }
+.button:disabled { cursor: not-allowed; opacity: .58; }
+.button:disabled:hover { transform: none; box-shadow: none; }
 .button-primary { color: white; background: var(--blue); }
 .button-secondary { color: var(--navy); background: white; border: 1px solid var(--line); }
 .button-submit { width: fit-content; color: var(--navy); background: var(--gold); }
@@ -93,6 +95,7 @@ button { cursor: pointer; }
 .footer-links, .footer-contact { display: grid; gap: 10px; }
 .footer-links a, .footer-contact a { color: #b9d0e8; }
 .footer-links a:hover, .footer-contact a:hover { color: white; }
+.footer-contact .contact-placeholder { display: inline-flex; align-items: center; gap: 7px; color: #9fc5ee; }
 .footer-grid > div:last-child p { margin: 16px 0 0; color: #9fc5ee; font-size: .84rem; line-height: 1.6; }
 .footer-bottom { padding-block: 18px; color: #9fc5ee; border-top: 1px solid rgb(255 255 255 / .12); font-size: .8rem; }
 
@@ -200,5 +203,6 @@ button { cursor: pointer; }
 .contact-detail strong, .contact-detail a, .contact-detail span { display: block; }
 .contact-detail strong { margin-bottom: 3px; color: var(--navy); font-size: .85rem; }
 .contact-detail a, .contact-detail span { color: var(--muted); line-height: 1.55; }
+.contact-detail .contact-placeholder { color: #8a620f; }
 @media (max-width: 900px) { .benefit-grid, .ticket-options { grid-template-columns: repeat(2, minmax(0, 1fr)); } .contact-layout, .two-column-intro, .promo-section { grid-template-columns: 1fr; } .promo-image { min-height: 280px; } .intro-image { min-height: 350px; } }
 @media (max-width: 760px) { .hero-home { min-height: 670px; } .hero-content { padding-block: 90px 140px; } .hero-stamp { right: 16px; bottom: 25px; font-size: .72rem; } .section { padding-block: 62px; } .split-heading, .contact-cta-inner, .destination-cta, .faq-cta { align-items: flex-start; flex-direction: column; } .benefit-grid, .ticket-options { grid-template-columns: 1fr; } .promo-section { border-radius: 16px; } .page-hero-inner { padding-block: 62px; } .page-hero h1 { font-size: clamp(2.55rem, 13vw, 4rem); } .notice { flex-direction: column; } }

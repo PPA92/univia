@@ -10,8 +10,9 @@ export const siteConfig = {
 
 export const contactConfig = {
   phoneDisplay: '+95 XXX XXX XXX',
-  whatsappNumber: '95000000000',
-  email: 'hello@example.com',
+  whatsappNumber: '',
+  email: '',
+  emailPlaceholder: '[Configure email]',
   officeAddress: '[Configure office address]',
   facebookUrl: '',
   businessHours: '[Configure business hours]',
@@ -29,15 +30,25 @@ export const assetConfig = {
   assistance:
     'https://images.unsplash.com/photo-1542296332-2e4473faf563?auto=format&fit=crop&w=1200&q=85',
   footerBackground: '/footer-pattern.svg',
-  socialShare: '/social-share.svg',
+  socialShare: '/social-share.png',
 } as const;
 
 export type ContactChannel = 'whatsapp' | 'mailto';
 
+export function isWhatsAppConfigured(): boolean {
+  return contactConfig.whatsappNumber.trim().length > 0;
+}
+
+export function isEmailConfigured(): boolean {
+  return contactConfig.email.trim().length > 0;
+}
+
 export function buildWhatsAppUrl(message: string): string {
+  if (!isWhatsAppConfigured()) return '';
   return `https://wa.me/${contactConfig.whatsappNumber}?text=${encodeURIComponent(message)}`;
 }
 
 export function buildMailtoUrl(subject: string, body: string): string {
+  if (!isEmailConfigured()) return '';
   return `mailto:${contactConfig.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 }

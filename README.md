@@ -33,7 +33,7 @@ Before launch, review `app/config.ts` and replace every visible placeholder:
 
 Unknown company information stays in one configuration module. Do not add claims that have not been supplied and approved. The English/Myanmar UI copy is centralized in `app/i18n.ts`; static destination, service, FAQ, benefit, promo, and placeholder-testimonial records are in `app/data.ts`.
 
-The temporary SVG assets are `public/logo-light.svg`, `public/logo-dark.svg`, `public/favicon.svg`, `public/footer-pattern.svg`, and `public/social-share.svg`. Replace them with approved brand assets when available. No airline marks are included.
+The temporary brand assets include `public/logo-light.svg`, `public/logo-dark.svg`, `public/favicon.svg`, `public/footer-pattern.svg`, and the raster `public/social-share.png` used for social metadata. The source concept remains in `public/social-share.svg`. Replace them with approved brand assets when available. No airline marks are included.
 
 ## Images and licensing
 
@@ -43,7 +43,7 @@ The starter visual set uses stable Unsplash image URLs and the existing `next.co
 
 The flight form validates route, dates, passenger count, and class in the browser. It creates a formatted, URL-encoded WhatsApp inquiry using the configured number and opens the generated link. It does not check availability, calculate pricing, complete a booking, or send data to a UNIVIA backend.
 
-The contact form validates name, email, and message, then exposes WhatsApp and `mailto:` links. Both actions open the visitor's configured external channel. No form submission endpoint, API route, database, authentication, payment, or booking engine exists.
+The contact form validates name, email, and message, then exposes WhatsApp and `mailto:` links when those channels are configured. Unconfigured channels remain non-actionable placeholders, so visitor data is not sent to invented recipients. No form submission endpoint, API route, database, authentication, payment, or booking engine exists.
 
 The language switcher changes the shared client-rendered navigation, forms, cards, FAQ disclosure, and localized page copy between English and Myanmar. The site uses keyboard-visible focus states, responsive navigation, semantic form labels, and reduced-motion CSS behavior.
 
