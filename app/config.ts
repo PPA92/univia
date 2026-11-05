@@ -71,9 +71,9 @@ export const assetConfig = {
   footerBackground: '',
 } as const;
 
-export function isWhatsAppConfigured(): boolean { return contactConfig.whatsappNumber.trim().length > 0; }
-export function isEmailConfigured(): boolean { return contactConfig.email.trim().length > 0; }
 function normaliseWhatsAppNumber(): string { return contactConfig.whatsappNumber.replace(/[^\d]/g, ''); }
+export function isWhatsAppConfigured(): boolean { return normaliseWhatsAppNumber().length > 0; }
+export function isEmailConfigured(): boolean { return contactConfig.email.trim().length > 0; }
 export function buildWhatsAppUrl(message: string): string {
   if (!isWhatsAppConfigured()) return '';
   return `https://wa.me/${normaliseWhatsAppNumber()}?text=${encodeURIComponent(message)}`;
