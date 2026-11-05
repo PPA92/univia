@@ -1,0 +1,1 @@
+import {Cards} from '../components';export default function Services(){return <main className="container py-20"><p className="text-blue font-bold">OUR SERVICES</p><h1 className="text-5xl font-bold text-navy mt-3 mb-12">Support for every kind of trip.</h1><Cards kind="service"/></main>}

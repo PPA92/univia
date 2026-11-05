@@ -1,0 +1,1 @@
+import {FAQ} from '../components';export default function Faq(){return <main className="container py-20"><p className="text-blue font-bold">FAQ</p><h1 className="text-5xl font-bold text-navy mt-3 mb-12">Questions, answered simply.</h1><FAQ/></main>}
