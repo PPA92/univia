@@ -266,8 +266,7 @@ export function Inquiry() {
       <div className="field"><label htmlFor="passengers">{t.inquiry.passengers}</label><input id="passengers" name="passengers" type="number" min="1" max="9" defaultValue="1" aria-invalid={Boolean(errors.passengers)} aria-describedby={errors.passengers ? 'passengers-error' : undefined} />{fieldError('passengers')}</div>
       <div className="field"><label htmlFor="class">{t.inquiry.travelClass}</label><select id="class" name="class" defaultValue="Economy" aria-invalid={Boolean(errors.class)} aria-describedby={errors.class ? 'class-error' : undefined}><option value="Economy">{t.inquiry.economy}</option><option value="Premium Economy">{t.inquiry.premiumEconomy}</option><option value="Business">{t.inquiry.business}</option><option value="First Class">{t.inquiry.firstClass}</option></select>{fieldError('class')}</div>
     </div>
-    <button className="button button-submit" type="submit" disabled={!isWhatsAppConfigured()}><MessageCircle size={18} aria-hidden="true" />{t.inquiry.submit}</button>
-    {!isWhatsAppConfigured() && <p className="field-error" role="status">{t.inquiry.errors.whatsappUnavailable}</p>}
+    <button className="button button-submit" type="submit"><MessageCircle size={18} aria-hidden="true" />{t.inquiry.submit}</button>
     {configurationError && <p className="field-error" role="alert">{t.inquiry.errors.whatsappUnavailable}</p>}
     {resultUrl && <p className="form-result"><a href={resultUrl} target="_blank" rel="noreferrer">{t.inquiry.generatedLink}</a></p>}
   </form>;
@@ -280,6 +279,7 @@ export function ContactInquiry() {
   const { language } = useAppLanguage();
   const t = getTranslations(language);
   const [errors, setErrors] = useState<ContactErrors>({});
+  const [configurationError, setConfigurationError] = useState(false);
   const [links, setLinks] = useState<{ whatsapp?: string; mailto?: string } | null>(null);
   const canUseChannel = isWhatsAppConfigured() || isEmailConfigured();
   function submit(event: FormEvent<HTMLFormElement>) {
@@ -294,21 +294,25 @@ export function ContactInquiry() {
     if (!message) nextErrors.message = t.contact.errors.message;
     setErrors(nextErrors);
     setLinks(null);
-    if (Object.keys(nextErrors).length > 0 || !canUseChannel) return;
+    setConfigurationError(false);
+    if (Object.keys(nextErrors).length > 0) return;
+    if (!canUseChannel) {
+      setConfigurationError(true);
+      return;
+    }
     const body = [`${siteConfig.brandName} Contact Inquiry`, `Name: ${name}`, `Email: ${email}`, `Message: ${message}`].join('\n');
     const whatsapp = buildWhatsAppUrl(body);
     const mailto = buildMailtoUrl(`${siteConfig.brandName} contact inquiry`, body);
     setLinks({ whatsapp: whatsapp || undefined, mailto: mailto || undefined });
-    if (whatsapp) window.open(whatsapp, '_blank', 'noopener,noreferrer');
   }
   const fieldError = (field: ContactField) => errors[field] ? <p className="field-error" id={`contact-${field}-error`} role="alert">{errors[field]}</p> : null;
   return <form onSubmit={submit} className="contact-form card" noValidate>
     <div className="field"><label htmlFor="contact-name">{t.contact.name}</label><input id="contact-name" name="name" autoComplete="name" aria-invalid={Boolean(errors.name)} aria-describedby={errors.name ? 'contact-name-error' : undefined} />{fieldError('name')}</div>
     <div className="field"><label htmlFor="contact-email">{t.contact.email}</label><input id="contact-email" name="email" type="email" autoComplete="email" aria-invalid={Boolean(errors.email)} aria-describedby={errors.email ? 'contact-email-error' : undefined} />{fieldError('email')}</div>
     <div className="field"><label htmlFor="contact-message">{t.contact.message}</label><textarea id="contact-message" name="message" rows={5} aria-invalid={Boolean(errors.message)} aria-describedby={errors.message ? 'contact-message-error' : undefined} />{fieldError('message')}</div>
-    {!canUseChannel && <p className="field-error" role="status">{t.contact.errors.configuration}</p>}
-    <button className="button button-submit" type="submit" disabled={!canUseChannel}><MessageCircle size={18} aria-hidden="true" />{t.contact.submit}</button>
-    {links && <div className="form-result" role="status"><p>{t.contact.success}</p><div className="result-links">{links.whatsapp && <a href={links.whatsapp} target="_blank" rel="noreferrer"><MessageCircle size={16} aria-hidden="true" />WhatsApp</a>}{links.mailto && <a href={links.mailto}><Mail size={16} aria-hidden="true" />{t.contact.mailtoAlternative}</a>}</div></div>}
+    {configurationError && <p className="field-error" role="alert">{t.contact.errors.configuration}</p>}
+    <button className="button button-submit" type="submit"><MessageCircle size={18} aria-hidden="true" />{t.contact.submit}</button>
+    {links && <div className="form-result" role="status"><p>{t.contact.success}</p><div className="result-links">{links.whatsapp && <a href={links.whatsapp} target="_blank" rel="noreferrer"><MessageCircle size={16} aria-hidden="true" />{t.common.sendWhatsApp}</a>}{links.mailto && <a href={links.mailto}><Mail size={16} aria-hidden="true" />{t.common.sendEmail}</a>}</div></div>}
   </form>;
 }
 
