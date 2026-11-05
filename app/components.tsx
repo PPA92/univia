@@ -188,9 +188,9 @@ export function Cards({ kind, limit }: { kind: 'dest' | 'service'; limit?: numbe
   const { language } = useAppLanguage();
   const t = getTranslations(language);
   if (kind === 'dest') {
-    return <div className="card-grid">{destinations.slice(0, limit).map((destination) => <article className="card image-card" key={destination.id}>
+    return <div className="card-grid">{destinations.slice(0, limit).map((destination) => <article className="card image-card" id={destination.id} key={destination.id}>
       <div className="card-image"><Image src={destination.image} alt={text(destination.alt, language)} fill sizes="(max-width: 768px) 100vw, 33vw" /></div>
-      <div className="card-content"><p className="card-kicker">{text(destination.country, language)}</p><h3>{text(destination.city, language)}</h3><p>{text(destination.description, language)}</p><Link className="inline-link" href="/contact">{t.common.inquire} <ArrowRight size={15} aria-hidden="true" /></Link></div>
+      <div className="card-content"><p className="card-kicker">{text(destination.country, language)}</p><h3>{text(destination.city, language)}</h3><p>{text(destination.description, language)}</p><div className="card-actions"><Link className="inline-link" href={`/destinations#${destination.id}`}>{t.common.explore} <ArrowRight size={15} aria-hidden="true" /></Link><Link className="inline-link" href={`/air-tickets?destination=${encodeURIComponent(destination.city.en)}`}>{t.common.flightInquiry} <ArrowRight size={15} aria-hidden="true" /></Link></div></div>
     </article>)}</div>;
   }
   return <div className="card-grid">{services.slice(0, limit).map((service) => { const Icon = iconMap[service.icon]; return <article className="card service-card" key={service.id}>
@@ -207,9 +207,15 @@ export function Inquiry() {
   const { language } = useAppLanguage();
   const t = getTranslations(language);
   const [trip, setTrip] = useState<'oneWay' | 'roundTrip'>('roundTrip');
+  const [destination, setDestination] = useState('');
   const [errors, setErrors] = useState<InquiryErrors>({});
   const [configurationError, setConfigurationError] = useState(false);
   const [resultUrl, setResultUrl] = useState('');
+
+  useEffect(() => {
+    const selectedDestination = new URLSearchParams(window.location.search).get('destination');
+    if (selectedDestination) setDestination(selectedDestination);
+  }, []);
 
   function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -260,7 +266,7 @@ export function Inquiry() {
     </div></div>
     <div className="form-grid">
       <div className="field"><label htmlFor="from">{t.inquiry.from}</label><input id="from" name="from" autoComplete="off" aria-invalid={Boolean(errors.from)} aria-describedby={errors.from ? 'from-error' : undefined} />{fieldError('from')}</div>
-      <div className="field"><label htmlFor="to">{t.inquiry.to}</label><input id="to" name="to" autoComplete="off" aria-invalid={Boolean(errors.to)} aria-describedby={errors.to ? 'to-error' : undefined} />{fieldError('to')}</div>
+      <div className="field"><label htmlFor="to">{t.inquiry.to}</label><input id="to" name="to" value={destination} onChange={(event) => setDestination(event.target.value)} autoComplete="off" aria-invalid={Boolean(errors.to)} aria-describedby={errors.to ? 'to-error' : undefined} />{fieldError('to')}</div>
       <div className="field"><label htmlFor="departure">{t.inquiry.departureDate}</label><input id="departure" name="departure" type="date" aria-invalid={Boolean(errors.departure)} aria-describedby={errors.departure ? 'departure-error' : undefined} />{fieldError('departure')}</div>
       <div className="field"><label htmlFor="return">{t.inquiry.returnDate} <span className="optional">({trip === 'oneWay' ? t.common.optional : t.common.required})</span></label><input id="return" name="return" type="date" disabled={trip === 'oneWay'} aria-invalid={Boolean(errors.return)} aria-describedby={errors.return ? 'return-error' : undefined} />{fieldError('return')}</div>
       <div className="field"><label htmlFor="passengers">{t.inquiry.passengers}</label><input id="passengers" name="passengers" type="number" min="1" max="9" defaultValue="1" aria-invalid={Boolean(errors.passengers)} aria-describedby={errors.passengers ? 'passengers-error' : undefined} />{fieldError('passengers')}</div>

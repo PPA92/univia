@@ -56,6 +56,8 @@ button { cursor: pointer; }
 .card-content h3 { margin: 7px 0 9px; color: var(--navy); font-size: 1.25rem; line-height: 1.2; }
 .card-content p { margin: 0; color: var(--muted); line-height: 1.65; }
 .inline-link { display: inline-flex; align-items: center; gap: 6px; margin-top: 18px; color: var(--blue); font-size: .9rem; font-weight: 750; }
+.card-actions { display: flex; flex-wrap: wrap; gap: 14px; }
+.card-actions .inline-link { margin-top: 18px; }
 .service-icon { display: grid; place-items: center; min-height: 142px; color: var(--blue); background: #e9f1ff; }
 .service-icon svg { width: 42px; height: 42px; }
 

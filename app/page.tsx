@@ -59,7 +59,7 @@ export default function Home() {
 
     <section className="promo-section container">
       <div className="promo-image"><Image src={promoContent.image} alt="Airplane wing seen above the clouds" fill sizes="(max-width: 760px) 100vw, 50vw" /></div>
-      <div className="promo-copy"><p className="eyebrow"><Translated value={{ en: copy.home.promoEyebrow, my: myCopy.home.promoEyebrow }} /></p><h2><Translated value={promoContent.title} /></h2><p><Translated value={promoContent.description} /></p><div className="promo-placeholder"><Play size={18} aria-hidden="true" /><span><Translated value={{ en: copy.home.videoPlaceholder, my: myCopy.home.videoPlaceholder }} /></span></div></div>
+      <div className="promo-copy"><p className="eyebrow"><Translated value={{ en: copy.home.promoEyebrow, my: myCopy.home.promoEyebrow }} /></p><h2><Translated value={promoContent.title} /></h2><p><Translated value={promoContent.description} /></p>{promoContent.videoUrl.trim() ? <a className="promo-placeholder" href={promoContent.videoUrl} target="_blank" rel="noreferrer"><Play size={18} aria-hidden="true" /><span><Translated value={{ en: copy.home.videoLink, my: myCopy.home.videoLink }} /></span></a> : <div className="promo-placeholder"><Play size={18} aria-hidden="true" /><span><Translated value={{ en: copy.home.videoPlaceholder, my: myCopy.home.videoPlaceholder }} /></span></div>}</div>
     </section>
 
     <section className="section section-white">

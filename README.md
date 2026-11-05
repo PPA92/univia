@@ -29,7 +29,7 @@ Before launch, review `app/config.ts` and replace every visible placeholder:
 - WhatsApp number and display phone number.
 - Email address, office address, business hours, and optional Facebook URL.
 - Brand description and any approved company copy.
-- Hero, page, destination, service, and social-share assets in `app/config.ts` and `app/data.ts`.
+- Hero, page, destination, service, promo, and social-share assets in `app/config.ts`.
 
 Unknown company information stays in one configuration module. Do not add claims that have not been supplied and approved. The English/Myanmar UI copy is centralized in `app/i18n.ts`; static destination, service, FAQ, benefit, promo, and placeholder-testimonial records are in `app/data.ts`.
 

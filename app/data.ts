@@ -1,3 +1,4 @@
+import { assetConfig } from './config';
 import type { Language } from './i18n';
 
 export type LocalizedText = Record<Language, string>;
@@ -46,8 +47,6 @@ export type PromoContent = {
   videoUrl: string;
 };
 
-const image = (photoId: string, width = 900) =>
-  `https://images.unsplash.com/${photoId}?auto=format&fit=crop&w=${width}&q=80`;
 
 export const destinations: Destination[] = [
   {
@@ -55,7 +54,7 @@ export const destinations: Destination[] = [
     city: { en: 'Bangkok', my: 'ဘန်ကောက်' },
     country: { en: 'Thailand', my: 'ထိုင်းနိုင်ငံ' },
     description: { en: 'Vibrant city life, cuisine and culture.', my: 'မြို့ပြဘဝ၊ အစားအစာနှင့် ယဉ်ကျေးမှုများကို ရှာဖွေပါ။' },
-    image: image('photo-1508009603885-50cf7c579365'),
+    image: assetConfig.destinations.bangkok,
     alt: { en: 'Bangkok city buildings and temple roof', my: 'ဘန်ကောက်မြို့၏ အဆောက်အအုံများနှင့် ဘုရားကျောင်းခေါင်မိုး' },
   },
   {
@@ -63,7 +62,7 @@ export const destinations: Destination[] = [
     city: { en: 'Singapore', my: 'စင်ကာပူ' },
     country: { en: 'Singapore', my: 'စင်ကာပူနိုင်ငံ' },
     description: { en: 'A polished gateway to Southeast Asia.', my: 'အရှေ့တောင်အာရှသို့ ခေတ်မီသော တံခါးပေါက်တစ်ခု။' },
-    image: image('photo-1525625293386-3f8f99389edd'),
+    image: assetConfig.destinations.singapore,
     alt: { en: 'Singapore skyline at dusk', my: 'ညနေခင်း စင်ကာပူမြို့ပြမြင်ကွင်း' },
   },
   {
@@ -71,7 +70,7 @@ export const destinations: Destination[] = [
     city: { en: 'Kuala Lumpur', my: 'ကွာလာလမ်ပူ' },
     country: { en: 'Malaysia', my: 'မလေးရှားနိုင်ငံ' },
     description: { en: 'Modern energy, food and welcoming neighborhoods.', my: 'ခေတ်မီစွမ်းအင်၊ အစားအစာနှင့် နွေးထွေးသော ရပ်ကွက်များ။' },
-    image: image('photo-1596422846543-75c6fc197f07'),
+    image: assetConfig.destinations.kualaLumpur,
     alt: { en: 'Kuala Lumpur skyline', my: 'ကွာလာလမ်ပူမြို့ပြမြင်ကွင်း' },
   },
   {
@@ -79,7 +78,7 @@ export const destinations: Destination[] = [
     city: { en: 'Dubai', my: 'ဒူဘိုင်း' },
     country: { en: 'United Arab Emirates', my: 'အာရပ်စော်ဘွားများပြည်ထောင်စု' },
     description: { en: 'A modern city built for discovery.', my: 'ရှာဖွေလေ့လာရန် ဖန်တီးထားသော ခေတ်မီမြို့တစ်မြို့။' },
-    image: image('photo-1512453979798-5ea266f8880c'),
+    image: assetConfig.destinations.dubai,
     alt: { en: 'Dubai skyline with Burj Khalifa', my: 'ဘူဂျ်ခါလီဖာပါဝင်သော ဒူဘိုင်းမြို့ပြမြင်ကွင်း' },
   },
   {
@@ -87,7 +86,7 @@ export const destinations: Destination[] = [
     city: { en: 'Tokyo', my: 'တိုကျို' },
     country: { en: 'Japan', my: 'ဂျပန်နိုင်ငံ' },
     description: { en: 'Tradition and innovation in one journey.', my: 'အစဉ်အလာနှင့် ဆန်းသစ်တီထွင်မှုတို့ကို ခရီးတစ်ခုတည်းတွင် တွေ့ကြုံပါ။' },
-    image: image('photo-1540959733332-eab4deabeeaf'),
+    image: assetConfig.destinations.tokyo,
     alt: { en: 'Tokyo city street and skyline', my: 'တိုကျိုမြို့၏ လမ်းနှင့် မြို့ပြမြင်ကွင်း' },
   },
   {
@@ -95,7 +94,7 @@ export const destinations: Destination[] = [
     city: { en: 'Seoul', my: 'ဆိုးလ်' },
     country: { en: 'South Korea', my: 'တောင်ကိုရီးယားနိုင်ငံ' },
     description: { en: 'Energy, design and unforgettable flavors.', my: 'တက်ကြွမှု၊ ဒီဇိုင်းနှင့် မမေ့နိုင်သော အရသာများ။' },
-    image: image('photo-1538485399081-7c897b4d7f0a'),
+    image: assetConfig.destinations.seoul,
     alt: { en: 'Seoul city skyline at night', my: 'ညအချိန် ဆိုးလ်မြို့ပြမြင်ကွင်း' },
   },
   {
@@ -103,7 +102,7 @@ export const destinations: Destination[] = [
     city: { en: 'Phuket', my: 'ဖူးကက်' },
     country: { en: 'Thailand', my: 'ထိုင်းနိုင်ငံ' },
     description: { en: 'Island time, clear water and room to slow down.', my: 'ကျွန်းအပန်းဖြေမှု၊ ကြည်လင်သောရေနှင့် အေးဆေးအနားယူနိုင်သောနေရာ။' },
-    image: image('photo-1589394815804-964ed0be2eb5'),
+    image: assetConfig.destinations.phuket,
     alt: { en: 'Phuket tropical beach', my: 'ဖူးကက် အပူပိုင်းကမ်းခြေ' },
   },
   {
@@ -111,7 +110,7 @@ export const destinations: Destination[] = [
     city: { en: 'Yangon', my: 'ရန်ကုန်' },
     country: { en: 'Myanmar', my: 'မြန်မာနိုင်ငံ' },
     description: { en: 'A welcoming starting point for your next trip.', my: 'နောက်ထပ်ခရီးအတွက် နွေးထွေးစွာ စတင်နိုင်သောနေရာ။' },
-    image: image('photo-1518005020951-eccb494ad742'),
+    image: assetConfig.destinations.yangon,
     alt: { en: 'Yangon city and golden pagoda', my: 'ရန်ကုန်မြို့နှင့် ရွှေရောင်ဘုရား' },
   },
   {
@@ -119,7 +118,7 @@ export const destinations: Destination[] = [
     city: { en: 'Mandalay', my: 'မန္တလေး' },
     country: { en: 'Myanmar', my: 'မြန်မာနိုင်ငံ' },
     description: { en: 'A local gateway to culture and heritage.', my: 'ယဉ်ကျေးမှုနှင့် အမွေအနှစ်များဆီသို့ ပြည်တွင်းတံခါးပေါက်။' },
-    image: image('photo-1548013146-72479768bada'),
+    image: assetConfig.destinations.mandalay,
     alt: { en: 'Mandalay temple architecture', my: 'မန္တလေး ဘုရားကျောင်းဗိသုကာ' },
   },
 ];
@@ -130,14 +129,14 @@ export const services: Service[] = [
     title: { en: 'Domestic Flight Tickets', my: 'ပြည်တွင်းလေယာဉ်လက်မှတ်များ' },
     description: { en: 'Support for journeys across Myanmar.', my: 'မြန်မာနိုင်ငံအတွင်း ခရီးစဉ်များအတွက် ကူညီပေးမှု။' },
     icon: 'plane',
-    image: image('photo-1436491865332-7a61a109cc05', 1200),
+    image: assetConfig.services.domesticFlights,
   },
   {
     id: 'international-flights',
     title: { en: 'International Flight Tickets', my: 'နိုင်ငံတကာလေယာဉ်လက်မှတ်များ' },
     description: { en: 'Explore routes and plans beyond borders.', my: 'နယ်စပ်များကျော်လွန်သော ခရီးစဉ်များနှင့် အစီအစဉ်များကို ရှာဖွေပါ။' },
     icon: 'globe',
-    image: image('photo-1488646953014-85cb44e25828', 1200),
+    image: assetConfig.services.internationalFlights,
   },
   {
     id: 'round-trip',
@@ -156,14 +155,14 @@ export const services: Service[] = [
     title: { en: 'Corporate Travel Assistance', my: 'ကုမ္ပဏီခရီးစဉ် ကူညီပေးမှု' },
     description: { en: 'Practical assistance for business travel needs.', my: 'စီးပွားရေးခရီးစဉ်လိုအပ်ချက်များအတွက် လက်တွေ့ကျသော ကူညီပေးမှု။' },
     icon: 'briefcase',
-    image: image('photo-1556761175-b413da4baf72', 1200),
+    image: assetConfig.services.corporateTravel,
   },
   {
     id: 'consultation',
     title: { en: 'Travel Consultation', my: 'ခရီးသွား အကြံပေးမှု' },
     description: { en: 'Talk through options before you decide.', my: 'ဆုံးဖြတ်ချက်မချမီ ရွေးချယ်စရာများကို ဆွေးနွေးပါ။' },
     icon: 'compass',
-    image: image('photo-1542296332-2e4473faf563', 1200),
+    image: assetConfig.services.consultation,
   },
 ];
 
@@ -190,6 +189,6 @@ export const testimonials: Testimonial[] = [
 export const promoContent: PromoContent = {
   title: { en: 'A thoughtful start to every journey.', my: 'ခရီးတိုင်းအတွက် စဉ်းစားပေးထားသော အစပြုမှု။' },
   description: { en: 'Use the configured inquiry channels to discuss your next route. No live pricing or availability is represented here.', my: 'နောက်ထပ်ခရီးစဉ်အကြောင်း ပြင်ဆင်ထားသော မေးမြန်းမှုလမ်းကြောင်းများမှ ဆွေးနွေးပါ။ ဤနေရာတွင် တိုက်ရိုက်စျေးနှုန်း သို့မဟုတ် ရရှိနိုင်မှုကို မဖော်ပြပါ။' },
-  image: image('photo-1436491865332-7a61a109cc05', 1600),
+  image: assetConfig.promo,
   videoUrl: '',
 };
