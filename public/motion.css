@@ -1,0 +1,4 @@
+[data-motion] .button, [data-motion] .nav-primary, [data-motion] .photo-link, [data-motion] .text-link, [data-motion] .footer-links a { transition-timing-function: cubic-bezier(.2,.8,.2,1); }
+[data-motion] .photo-link { transition: transform 180ms cubic-bezier(.2,.8,.2,1); }
+[data-motion] .photo-link:hover { transform: translateY(-2px); }
+[data-motion] .photo-link:hover .photo { transform: scale(1.03); }

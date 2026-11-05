@@ -1,6 +1,6 @@
-# UNIVIA premium travel frontend
+# UNIVIA travel inquiry frontend
 
-UNIVIA is a frontend-only Next.js App Router site for Univia Co.,Ltd. It presents domestic and international airline-ticket inquiry flows, destination ideas, travel services, FAQs, and configurable contact channels. It does not claim live availability, live pricing, booking completion, airline partnerships, offices, awards, registration details, customer statistics, or service guarantees.
+UNIVIA is a static Next.js App Router frontend for Univia Co.,Ltd. It presents domestic and international flight inquiry flows, destination ideas, travel services, FAQs, and configurable contact channels. It does not claim live availability, live pricing, booking completion, airline partnerships, offices, awards, registration details, customer statistics, or service guarantees.
 
 ## Local setup
 
@@ -11,52 +11,35 @@ npm install
 npm run dev
 ```
 
-Open `http://localhost:3000`. The production validation commands are:
+Production checks:
 
 ```bash
 npm run typecheck
 npm run lint
 npm run build
+npm run start
+npm run check:static
 ```
 
-`npm run build` statically prerenders the seven pages, `robots.txt`, and `sitemap.xml`. There is no automated test suite in this project.
+`check:static` expects the production server at `http://127.0.0.1:3000`. Set `STATIC_CHECK_URL` when using another local port. The build statically prerenders the seven requested pages, `robots.txt`, and `sitemap.xml`.
 
-## Configuration checklist
+## Configuration
 
-Before launch, review `app/config.ts` and replace every visible placeholder:
+Review `app/config.ts` before launch:
 
-- `NEXT_PUBLIC_SITE_URL`, or the fallback `https://univia.example`.
-- WhatsApp number and display phone number.
-- Email address, office address, business hours, and optional Facebook URL.
-- Brand description and any approved company copy.
-- Hero, page, destination, service, promo, and social-share assets in `app/config.ts`.
+- Set `NEXT_PUBLIC_SITE_URL` to the final public origin.
+- Set `contactConfig.whatsappNumber` and `contactConfig.email` only when those channels are ready.
+- Add approved office address, business hours, phone display value, or Facebook URL only when supplied by the UNIVIA team.
+- Replace the `travelPhotos` library records with UNIVIA-owned or licensed photography when available.
 
-Unknown company information stays in one configuration module. Do not add claims that have not been supplied and approved. The English/Myanmar UI copy is centralized in `app/i18n.ts`; static destination, service, FAQ, benefit, promo, and placeholder-testimonial records are in `app/data.ts`.
+Empty contact values stay absent from the visible interface and keep forms non-actionable. The forms prepare URL-encoded WhatsApp or email inquiries in the browser. They do not submit to a backend and do not complete a booking.
 
-The temporary brand assets include `public/logo-light.svg`, `public/logo-dark.svg`, `public/favicon.svg`, `public/footer-pattern.svg`, and the raster `public/social-share.png` used for social metadata. The source concept remains in `public/social-share.svg`. Replace them with approved brand assets when available. No airline marks are included.
+## Brand assets and image credits
 
-## Images and licensing
+The official SVGs supplied in `svgs/` are copied byte-for-byte into `public/brand/` under stable names for the header, footer, mark, and favicon. Keep `svgs/` as the source-of-truth folder.
 
-The starter visual set uses stable Unsplash image URLs and the existing `next.config.mjs` allowlist. Check the license and attribution requirements for every image before production, retain evidence of permission where required, and replace imagery with owned or approved assets when possible. Add a new remote host to `next.config.mjs` only after reviewing its licensing and image delivery behavior. Use `next/image` for content imagery and meaningful alt text for non-decorative images.
-
-## Inquiry and contact behavior
-
-The flight form validates route, dates, passenger count, and class in the browser. It creates a formatted, URL-encoded WhatsApp inquiry using the configured number and opens the generated link. It does not check availability, calculate pricing, complete a booking, or send data to a UNIVIA backend.
-
-The contact form validates name, email, and message, then exposes WhatsApp and `mailto:` links when those channels are configured. Unconfigured channels remain non-actionable placeholders, so visitor data is not sent to invented recipients. No form submission endpoint, API route, database, authentication, payment, or booking engine exists.
-
-The language switcher changes the shared client-rendered navigation, forms, cards, FAQ disclosure, and localized page copy between English and Myanmar. The site uses keyboard-visible focus states, responsive navigation, semantic form labels, and reduced-motion CSS behavior.
-
-## Vercel deployment
-
-1. Push or connect the repository to the intended Vercel project through your normal team workflow.
-2. Import it as a Next.js project with the default build command, or set `npm run build` explicitly.
-3. Add `NEXT_PUBLIC_SITE_URL` in Vercel Project Settings for the preview/production environment as appropriate. Use the final public HTTPS origin for production.
-4. Deploy a Preview first and inspect all routes, metadata, image loading, language switching, generated links, and narrow layouts.
-5. Promote only an approved build to Production. Update the configured public URL and approved contact/assets before launch.
-
-This repository does not create or change external Vercel resources. Vercel Hobby is restricted to personal, non-commercial use. A public commercial Univia website must use an appropriate commercial Vercel plan and comply with its current terms.
+The current photo catalog uses Unsplash URLs as clearly configured stand-ins. Each photo record includes its subject, source, stand-in status, source label, and credit URL. The footer discloses the stand-in material and opens the source list. Replace each record with owned or approved travel photography before launch, and retain the applicable licence evidence.
 
 ## Scope
 
-The project is a static frontend. Keep future work within the approved frontend scope unless a separate backend, booking, payment, or data-processing design is reviewed and authorized.
+This repository is a static frontend. It has no API route, database, authentication, payment integration, airline booking engine, or external deployment automation. External Vercel resources are not changed by the project.

@@ -1,14 +1,12 @@
-import { assetConfig } from './config';
-import type { Language } from './i18n';
-
-export type LocalizedText = Record<Language, string>;
+import { travelPhotos } from './config';
+import type { Language, LocalizedText } from './i18n';
 
 export type Destination = {
   id: string;
   city: LocalizedText;
   country: LocalizedText;
   description: LocalizedText;
-  image: string;
+  image: (typeof travelPhotos.destinations)[keyof typeof travelPhotos.destinations];
   alt: LocalizedText;
 };
 
@@ -16,179 +14,45 @@ export type Service = {
   id: string;
   title: LocalizedText;
   description: LocalizedText;
-  icon: 'plane' | 'globe' | 'repeat' | 'users' | 'briefcase' | 'compass';
-  image?: string;
+  image?: (typeof travelPhotos.services)[keyof typeof travelPhotos.services];
 };
 
-export type Benefit = {
-  id: string;
-  title: LocalizedText;
-  description: LocalizedText;
-  icon: 'calendar' | 'globe' | 'headphones' | 'compass';
-};
-
-export type FAQItem = {
-  id: string;
-  question: LocalizedText;
-  answer: LocalizedText;
-};
-
-export type Testimonial = {
-  id: string;
-  quote: LocalizedText;
-  attribution: LocalizedText;
-  isPlaceholder: true;
-};
-
-export type PromoContent = {
-  title: LocalizedText;
-  description: LocalizedText;
-  image: string;
-  videoUrl: string;
-};
-
+export type FAQItem = { id: string; question: LocalizedText; answer: LocalizedText };
 
 export const destinations: Destination[] = [
-  {
-    id: 'bangkok',
-    city: { en: 'Bangkok', my: 'ဘန်ကောက်' },
-    country: { en: 'Thailand', my: 'ထိုင်းနိုင်ငံ' },
-    description: { en: 'Vibrant city life, cuisine and culture.', my: 'မြို့ပြဘဝ၊ အစားအစာနှင့် ယဉ်ကျေးမှုများကို ရှာဖွေပါ။' },
-    image: assetConfig.destinations.bangkok,
-    alt: { en: 'Bangkok city buildings and temple roof', my: 'ဘန်ကောက်မြို့၏ အဆောက်အအုံများနှင့် ဘုရားကျောင်းခေါင်မိုး' },
-  },
-  {
-    id: 'singapore',
-    city: { en: 'Singapore', my: 'စင်ကာပူ' },
-    country: { en: 'Singapore', my: 'စင်ကာပူနိုင်ငံ' },
-    description: { en: 'A polished gateway to Southeast Asia.', my: 'အရှေ့တောင်အာရှသို့ ခေတ်မီသော တံခါးပေါက်တစ်ခု။' },
-    image: assetConfig.destinations.singapore,
-    alt: { en: 'Singapore skyline at dusk', my: 'ညနေခင်း စင်ကာပူမြို့ပြမြင်ကွင်း' },
-  },
-  {
-    id: 'kuala-lumpur',
-    city: { en: 'Kuala Lumpur', my: 'ကွာလာလမ်ပူ' },
-    country: { en: 'Malaysia', my: 'မလေးရှားနိုင်ငံ' },
-    description: { en: 'Modern energy, food and welcoming neighborhoods.', my: 'ခေတ်မီစွမ်းအင်၊ အစားအစာနှင့် နွေးထွေးသော ရပ်ကွက်များ။' },
-    image: assetConfig.destinations.kualaLumpur,
-    alt: { en: 'Kuala Lumpur skyline', my: 'ကွာလာလမ်ပူမြို့ပြမြင်ကွင်း' },
-  },
-  {
-    id: 'dubai',
-    city: { en: 'Dubai', my: 'ဒူဘိုင်း' },
-    country: { en: 'United Arab Emirates', my: 'အာရပ်စော်ဘွားများပြည်ထောင်စု' },
-    description: { en: 'A modern city built for discovery.', my: 'ရှာဖွေလေ့လာရန် ဖန်တီးထားသော ခေတ်မီမြို့တစ်မြို့။' },
-    image: assetConfig.destinations.dubai,
-    alt: { en: 'Dubai skyline with Burj Khalifa', my: 'ဘူဂျ်ခါလီဖာပါဝင်သော ဒူဘိုင်းမြို့ပြမြင်ကွင်း' },
-  },
-  {
-    id: 'tokyo',
-    city: { en: 'Tokyo', my: 'တိုကျို' },
-    country: { en: 'Japan', my: 'ဂျပန်နိုင်ငံ' },
-    description: { en: 'Tradition and innovation in one journey.', my: 'အစဉ်အလာနှင့် ဆန်းသစ်တီထွင်မှုတို့ကို ခရီးတစ်ခုတည်းတွင် တွေ့ကြုံပါ။' },
-    image: assetConfig.destinations.tokyo,
-    alt: { en: 'Tokyo city street and skyline', my: 'တိုကျိုမြို့၏ လမ်းနှင့် မြို့ပြမြင်ကွင်း' },
-  },
-  {
-    id: 'seoul',
-    city: { en: 'Seoul', my: 'ဆိုးလ်' },
-    country: { en: 'South Korea', my: 'တောင်ကိုရီးယားနိုင်ငံ' },
-    description: { en: 'Energy, design and unforgettable flavors.', my: 'တက်ကြွမှု၊ ဒီဇိုင်းနှင့် မမေ့နိုင်သော အရသာများ။' },
-    image: assetConfig.destinations.seoul,
-    alt: { en: 'Seoul city skyline at night', my: 'ညအချိန် ဆိုးလ်မြို့ပြမြင်ကွင်း' },
-  },
-  {
-    id: 'phuket',
-    city: { en: 'Phuket', my: 'ဖူးကက်' },
-    country: { en: 'Thailand', my: 'ထိုင်းနိုင်ငံ' },
-    description: { en: 'Island time, clear water and room to slow down.', my: 'ကျွန်းအပန်းဖြေမှု၊ ကြည်လင်သောရေနှင့် အေးဆေးအနားယူနိုင်သောနေရာ။' },
-    image: assetConfig.destinations.phuket,
-    alt: { en: 'Phuket tropical beach', my: 'ဖူးကက် အပူပိုင်းကမ်းခြေ' },
-  },
-  {
-    id: 'yangon',
-    city: { en: 'Yangon', my: 'ရန်ကုန်' },
-    country: { en: 'Myanmar', my: 'မြန်မာနိုင်ငံ' },
-    description: { en: 'A welcoming starting point for your next trip.', my: 'နောက်ထပ်ခရီးအတွက် နွေးထွေးစွာ စတင်နိုင်သောနေရာ။' },
-    image: assetConfig.destinations.yangon,
-    alt: { en: 'Yangon city and golden pagoda', my: 'ရန်ကုန်မြို့နှင့် ရွှေရောင်ဘုရား' },
-  },
-  {
-    id: 'mandalay',
-    city: { en: 'Mandalay', my: 'မန္တလေး' },
-    country: { en: 'Myanmar', my: 'မြန်မာနိုင်ငံ' },
-    description: { en: 'A local gateway to culture and heritage.', my: 'ယဉ်ကျေးမှုနှင့် အမွေအနှစ်များဆီသို့ ပြည်တွင်းတံခါးပေါက်။' },
-    image: assetConfig.destinations.mandalay,
-    alt: { en: 'Mandalay temple architecture', my: 'မန္တလေး ဘုရားကျောင်းဗိသုကာ' },
-  },
+  { id: 'bangkok', city: { en: 'Bangkok', my: 'ဘန်ကောက်' }, country: { en: 'Thailand', my: 'ထိုင်းနိုင်ငံ' }, description: { en: 'City routes, food and culture.', my: 'မြို့ပြလမ်းကြောင်း၊ အစားအစာနှင့် ယဉ်ကျေးမှု။' }, image: travelPhotos.destinations.bangkok, alt: { en: 'Bangkok city and temple roof', my: 'ဘန်ကောက်မြို့နှင့် ဘုရားကျောင်းခေါင်မိုး' } },
+  { id: 'singapore', city: { en: 'Singapore', my: 'စင်ကာပူ' }, country: { en: 'Singapore', my: 'စင်ကာပူနိုင်ငံ' }, description: { en: 'A practical Southeast Asia gateway.', my: 'အရှေ့တောင်အာရှသို့ လက်တွေ့ကျသော တံခါးပေါက်။' }, image: travelPhotos.destinations.singapore, alt: { en: 'Singapore skyline', my: 'စင်ကာပူမြို့ပြမြင်ကွင်း' } },
+  { id: 'kuala-lumpur', city: { en: 'Kuala Lumpur', my: 'ကွာလာလမ်ပူ' }, country: { en: 'Malaysia', my: 'မလေးရှားနိုင်ငံ' }, description: { en: 'Modern neighborhoods and easy connections.', my: 'ခေတ်မီရပ်ကွက်များနှင့် လွယ်ကူသော ချိတ်ဆက်မှုများ။' }, image: travelPhotos.destinations.kualaLumpur, alt: { en: 'Kuala Lumpur skyline', my: 'ကွာလာလမ်ပူမြို့ပြမြင်ကွင်း' } },
+  { id: 'dubai', city: { en: 'Dubai', my: 'ဒူဘိုင်း' }, country: { en: 'United Arab Emirates', my: 'အာရပ်စော်ဘွားများပြည်ထောင်စု' }, description: { en: 'A long-haul city route to consider.', my: 'အဝေးခရီးအတွက် စဉ်းစားနိုင်သော မြို့လမ်းကြောင်း။' }, image: travelPhotos.destinations.dubai, alt: { en: 'Dubai skyline', my: 'ဒူဘိုင်းမြို့ပြမြင်ကွင်း' } },
+  { id: 'tokyo', city: { en: 'Tokyo', my: 'တိုကျို' }, country: { en: 'Japan', my: 'ဂျပန်နိုင်ငံ' }, description: { en: 'Tradition, design and busy streets.', my: 'အစဉ်အလာ၊ ဒီဇိုင်းနှင့် တက်ကြွသောလမ်းများ။' }, image: travelPhotos.destinations.tokyo, alt: { en: 'Tokyo street and skyline', my: 'တိုကျိုလမ်းနှင့် မြို့ပြမြင်ကွင်း' } },
+  { id: 'seoul', city: { en: 'Seoul', my: 'ဆိုးလ်' }, country: { en: 'South Korea', my: 'တောင်ကိုရီးယားနိုင်ငံ' }, description: { en: 'A city route with energy and detail.', my: 'တက်ကြွမှုနှင့် အသေးစိတ်ရှိသော မြို့လမ်းကြောင်း။' }, image: travelPhotos.destinations.seoul, alt: { en: 'Seoul city skyline', my: 'ဆိုးလ်မြို့ပြမြင်ကွင်း' } },
+  { id: 'phuket', city: { en: 'Phuket', my: 'ဖူးကက်' }, country: { en: 'Thailand', my: 'ထိုင်းနိုင်ငံ' }, description: { en: 'Island travel with time to slow down.', my: 'အေးဆေးအနားယူနိုင်သော ကျွန်းခရီး။' }, image: travelPhotos.destinations.phuket, alt: { en: 'Phuket coastline', my: 'ဖူးကက်ကမ်းခြေ' } },
+  { id: 'yangon', city: { en: 'Yangon', my: 'ရန်ကုန်' }, country: { en: 'Myanmar', my: 'မြန်မာနိုင်ငံ' }, description: { en: 'A local route and a familiar start.', my: 'ပြည်တွင်းလမ်းကြောင်းနှင့် ရင်းနှီးသောအစ။' }, image: travelPhotos.destinations.yangon, alt: { en: 'Yangon street and pagoda', my: 'ရန်ကုန်လမ်းနှင့် ဘုရား' } },
+  { id: 'mandalay', city: { en: 'Mandalay', my: 'မန္တလေး' }, country: { en: 'Myanmar', my: 'မြန်မာနိုင်ငံ' }, description: { en: 'A route into culture and heritage.', my: 'ယဉ်ကျေးမှုနှင့် အမွေအနှစ်များဆီသို့ လမ်းကြောင်း။' }, image: travelPhotos.destinations.mandalay, alt: { en: 'Mandalay temple architecture', my: 'မန္တလေးဘုရားကျောင်းဗိသုကာ' } },
 ];
 
 export const services: Service[] = [
-  {
-    id: 'domestic-flights',
-    title: { en: 'Domestic Flight Tickets', my: 'ပြည်တွင်းလေယာဉ်လက်မှတ်များ' },
-    description: { en: 'Support for journeys across Myanmar.', my: 'မြန်မာနိုင်ငံအတွင်း ခရီးစဉ်များအတွက် ကူညီပေးမှု။' },
-    icon: 'plane',
-    image: assetConfig.services.domesticFlights,
-  },
-  {
-    id: 'international-flights',
-    title: { en: 'International Flight Tickets', my: 'နိုင်ငံတကာလေယာဉ်လက်မှတ်များ' },
-    description: { en: 'Explore routes and plans beyond borders.', my: 'နယ်စပ်များကျော်လွန်သော ခရီးစဉ်များနှင့် အစီအစဉ်များကို ရှာဖွေပါ။' },
-    icon: 'globe',
-    image: assetConfig.services.internationalFlights,
-  },
-  {
-    id: 'round-trip',
-    title: { en: 'Round-trip Bookings', my: 'အသွားအပြန် ကြိုတင်မှာယူမှုများ' },
-    description: { en: 'Plan departure and return in one inquiry.', my: 'ထွက်ခွာခြင်းနှင့် ပြန်လာခြင်းကို မေးမြန်းမှုတစ်ခုတည်းဖြင့် စီစဉ်ပါ။' },
-    icon: 'repeat',
-  },
-  {
-    id: 'group-bookings',
-    title: { en: 'Group Bookings', my: 'အဖွဲ့လိုက် ကြိုတင်မှာယူမှုများ' },
-    description: { en: 'Share group travel details for a considered response.', my: 'အဖွဲ့လိုက်ခရီးစဉ် အချက်အလက်များမျှဝေ၍ သင့်တော်သော တုံ့ပြန်မှုရယူပါ။' },
-    icon: 'users',
-  },
-  {
-    id: 'corporate-travel',
-    title: { en: 'Corporate Travel Assistance', my: 'ကုမ္ပဏီခရီးစဉ် ကူညီပေးမှု' },
-    description: { en: 'Practical assistance for business travel needs.', my: 'စီးပွားရေးခရီးစဉ်လိုအပ်ချက်များအတွက် လက်တွေ့ကျသော ကူညီပေးမှု။' },
-    icon: 'briefcase',
-    image: assetConfig.services.corporateTravel,
-  },
-  {
-    id: 'consultation',
-    title: { en: 'Travel Consultation', my: 'ခရီးသွား အကြံပေးမှု' },
-    description: { en: 'Talk through options before you decide.', my: 'ဆုံးဖြတ်ချက်မချမီ ရွေးချယ်စရာများကို ဆွေးနွေးပါ။' },
-    icon: 'compass',
-    image: assetConfig.services.consultation,
-  },
+  { id: 'domestic', title: { en: 'Domestic flight inquiries', my: 'ပြည်တွင်းလေယာဉ် မေးမြန်းမှု' }, description: { en: 'Share a route within Myanmar and the dates you are considering.', my: 'မြန်မာနိုင်ငံအတွင်း လမ်းကြောင်းနှင့် စဉ်းစားထားသောရက်စွဲများကို မျှဝေပါ။' }, image: travelPhotos.services.domestic },
+  { id: 'international', title: { en: 'International flight inquiries', my: 'နိုင်ငံတကာလေယာဉ် မေးမြန်းမှု' }, description: { en: 'Start with a destination, travel dates and the kind of trip you need.', my: 'ခရီးစဉ်နေရာ၊ ရက်စွဲနှင့် လိုအပ်သောခရီးအမျိုးအစားဖြင့် စတင်ပါ။' }, image: travelPhotos.services.international },
+  { id: 'groups', title: { en: 'Group travel planning', my: 'အဖွဲ့လိုက် ခရီးစဉ်စီစဉ်မှု' }, description: { en: 'Include passenger numbers and shared travel details in one inquiry.', my: 'ခရီးသည်အရေအတွက်နှင့် အဖွဲ့လိုက်အသေးစိတ်များကို မေးမြန်းမှုတစ်ခုတွင် ထည့်ပါ။' } },
+  { id: 'corporate', title: { en: 'Corporate travel assistance', my: 'ကုမ္ပဏီခရီးစဉ် ကူညီမှု' }, description: { en: 'Discuss practical route and timing needs for business travel.', my: 'စီးပွားရေးခရီးအတွက် လမ်းကြောင်းနှင့်အချိန်လိုအပ်ချက်များကို ဆွေးနွေးပါ။' }, image: travelPhotos.services.corporate },
+  { id: 'round-trip', title: { en: 'Round-trip planning', my: 'အသွားအပြန် ခရီးစဉ်စီစဉ်မှု' }, description: { en: 'Send departure and return details together for a clear starting point.', my: 'ထွက်ခွာနှင့် ပြန်လာမည့်အသေးစိတ်များကို အတူတကွပို့ပါ။' } },
+  { id: 'consultation', title: { en: 'Travel consultation', my: 'ခရီးသွား အကြံပေးမှု' }, description: { en: 'Ask a question before choosing the next step.', my: 'နောက်တစ်ဆင့်မရွေးချယ်မီ မေးခွန်းတစ်ခုမေးပါ။' }, image: travelPhotos.services.assistance },
 ];
 
-export const benefits: Benefit[] = [
-  { id: 'convenient', title: { en: 'Convenient booking', my: 'အဆင်ပြေသော မေးမြန်းမှု' }, description: { en: 'Share your travel needs in one clear inquiry.', my: 'သင်၏ခရီးသွားလိုအပ်ချက်များကို မေးမြန်းမှုတစ်ခုတွင် ရှင်းလင်းစွာမျှဝေပါ။' }, icon: 'calendar' },
-  { id: 'routes', title: { en: 'Domestic & international flights', my: 'ပြည်တွင်းနှင့် နိုင်ငံတကာလေယာဉ်များ' }, description: { en: 'Explore travel possibilities across local and international routes.', my: 'ပြည်တွင်းနှင့် နိုင်ငံတကာလမ်းကြောင်းများကို လေ့လာပါ။' }, icon: 'globe' },
-  { id: 'support', title: { en: 'Dedicated customer support', my: 'ဖောက်သည်အတွက် အာရုံစိုက်ကူညီမှု' }, description: { en: 'Continue the conversation through configured contact channels.', my: 'ပြင်ဆင်ထားသော ဆက်သွယ်ရေးလမ်းကြောင်းများမှ ဆက်လက်ဆွေးနွေးပါ။' }, icon: 'headphones' },
-  { id: 'assistance', title: { en: 'Travel assistance', my: 'ခရီးသွား ကူညီပေးမှု' }, description: { en: 'Discuss options before moving to your next step.', my: 'နောက်တစ်ဆင့်မတိုင်မီ ရွေးချယ်စရာများကို ဆွေးနွေးပါ။' }, icon: 'compass' },
+export const processSteps = [
+  { id: 'share', title: { en: 'Share the route', my: 'လမ်းကြောင်းမျှဝေပါ' }, text: { en: 'Tell us where you are starting, where you want to go and when.', my: 'ဘယ်နေရာမှစမည်၊ ဘယ်နေရာသွားမည်နှင့် ဘယ်အချိန်ကို ပြောပြပါ။' }, image: travelPhotos.process },
+  { id: 'review', title: { en: 'Review the options', my: 'ရွေးချယ်စရာများကို ပြန်လည်ကြည့်ပါ' }, text: { en: 'Continue the conversation through a configured inquiry channel.', my: 'ပြင်ဆင်ထားသော မေးမြန်းမှုလမ်းကြောင်းမှ ဆက်လက်ဆွေးနွေးပါ။' }, image: travelPhotos.services.assistance },
+  { id: 'decide', title: { en: 'Choose the next step', my: 'နောက်တစ်ဆင့်ရွေးပါ' }, text: { en: 'Use the information you confirm to decide what happens next.', my: 'အတည်ပြုထားသောအချက်အလက်ဖြင့် နောက်တစ်ဆင့်ကို ဆုံးဖြတ်ပါ။' }, image: travelPhotos.about },
 ];
 
 export const faqs: FAQItem[] = [
-  { id: 'book-ticket', question: { en: 'How can I book an airline ticket?', my: 'လေယာဉ်လက်မှတ်ကို မည်သို့မှာယူနိုင်ပါသလဲ?' }, answer: { en: 'Send an inquiry through the flight form or WhatsApp. The team can discuss available options and next steps.', my: 'လေယာဉ်ခရီးစဉ်ဖောင် သို့မဟုတ် WhatsApp မှတစ်ဆင့် မေးမြန်းပါ။ ရရှိနိုင်သောရွေးချယ်စရာများနှင့် နောက်တစ်ဆင့်ကို ဆွေးနွေးနိုင်ပါသည်။' } },
-  { id: 'international', question: { en: 'Can I book international flights?', my: 'နိုင်ငံတကာလေယာဉ်များကို မှာယူနိုင်ပါသလား?' }, answer: { en: 'You can ask about international itineraries through the inquiry form. Availability and pricing are confirmed separately.', my: 'မေးမြန်းမှုဖောင်မှတစ်ဆင့် နိုင်ငံတကာခရီးစဉ်များအကြောင်း မေးမြန်းနိုင်ပါသည်။ ရရှိနိုင်မှုနှင့် စျေးနှုန်းကို သီးခြားအတည်ပြုပါမည်။' } },
-  { id: 'round-trip', question: { en: 'Can I request round-trip tickets?', my: 'အသွားအပြန်လက်မှတ် တောင်းဆိုနိုင်ပါသလား?' }, answer: { en: 'Yes. Select Round trip and add your preferred return date to start an inquiry.', my: 'ရပါသည်။ အသွားအပြန်ကို ရွေးချယ်ပြီး နှစ်သက်သော ပြန်လာမည့်ရက်ကို ထည့်၍ မေးမြန်းနိုင်ပါသည်။' } },
-  { id: 'information', question: { en: 'What information is required?', my: 'မည်သည့်အချက်အလက်များ လိုအပ်ပါသလဲ?' }, answer: { en: 'The first inquiry asks for your route, dates, passenger count and travel class.', my: 'ပထမဆုံးမေးမြန်းမှုတွင် ခရီးစဉ်လမ်းကြောင်း၊ ရက်စွဲ၊ ခရီးသည်အရေအတွက်နှင့် ခရီးသွားအတန်းကို မေးမြန်းပါသည်။' } },
-  { id: 'contact', question: { en: 'How do I contact UNIVIA?', my: 'UNIVIA ကို မည်သို့ဆက်သွယ်နိုင်ပါသလဲ?' }, answer: { en: 'Use WhatsApp or email through the Contact page. Contact details are configurable placeholders.', my: 'ဆက်သွယ်ရန်စာမျက်နှာမှ WhatsApp သို့မဟုတ် အီးမေးလ်ကို အသုံးပြုပါ။ ဆက်သွယ်ရန်အချက်အလက်များသည် ပြင်ဆင်နိုင်သော နေရာယူစာသားများဖြစ်ပါသည်။' } },
-  { id: 'group', question: { en: 'Can I request group bookings?', my: 'အဖွဲ့လိုက် လက်မှတ်မှာယူမှု တောင်းဆိုနိုင်ပါသလား?' }, answer: { en: 'Yes. Include your group size and travel details in a WhatsApp inquiry.', my: 'ရပါသည်။ WhatsApp မေးမြန်းမှုတွင် အဖွဲ့အရွယ်အစားနှင့် ခရီးစဉ်အချက်အလက်များ ထည့်ပါ။' } },
+  { id: 'book-ticket', question: { en: 'How do I start a flight inquiry?', my: 'လေယာဉ်ခရီးစဉ် မေးမြန်းမှုကို မည်သို့စတင်ရမလဲ?' }, answer: { en: 'Use the flight form to share your route, dates, passenger count and travel class. The form prepares an inquiry; it does not complete a booking.', my: 'လမ်းကြောင်း၊ ရက်စွဲ၊ ခရီးသည်အရေအတွက်နှင့် အတန်းကို လေယာဉ်ဖောင်တွင် ဖြည့်ပါ။ ဖောင်သည် မေးမြန်းမှုကို ပြင်ဆင်ပေးပြီး ကြိုတင်မှာယူမှု မပြီးမြောက်ပါ။' } },
+  { id: 'international', question: { en: 'Can I ask about international flights?', my: 'နိုင်ငံတကာလေယာဉ်အကြောင်း မေးနိုင်ပါသလား?' }, answer: { en: 'Yes. Include the destination and preferred dates. Availability and pricing are confirmed separately through a configured channel.', my: 'မေးနိုင်ပါသည်။ ခရီးစဉ်နေရာနှင့် နှစ်သက်သောရက်စွဲများ ထည့်ပါ။ ရရှိနိုင်မှုနှင့် စျေးနှုန်းကို သီးခြားအတည်ပြုပါမည်။' } },
+  { id: 'round-trip', question: { en: 'Can I request a round trip?', my: 'အသွားအပြန် ခရီးစဉ်တောင်းနိုင်ပါသလား?' }, answer: { en: 'Yes. Choose Round trip and add a return date to the inquiry.', my: 'ရပါသည်။ အသွားအပြန်ကို ရွေးပြီး ပြန်လာမည့်ရက်စွဲ ထည့်ပါ။' } },
+  { id: 'information', question: { en: 'What information should I prepare?', my: 'မည်သည့်အချက်အလက်များ ပြင်ဆင်ရမလဲ?' }, answer: { en: 'Prepare the departure point, arrival point, travel dates, passenger count and class.', my: 'ထွက်ခွာရာ၊ ရောက်ရှိရာ၊ ခရီးရက်စွဲ၊ ခရီးသည်အရေအတွက်နှင့် အတန်းကို ပြင်ဆင်ပါ။' } },
+  { id: 'contact', question: { en: 'How can I contact UNIVIA?', my: 'UNIVIA ကို မည်သို့ဆက်သွယ်ရမလဲ?' }, answer: { en: 'Use the contact form to prepare a message. WhatsApp and email links appear only after those channels are configured.', my: 'ဆက်သွယ်ရန်ဖောင်မှ စာတစ်စောင်ပြင်ဆင်ပါ။ WhatsApp နှင့် အီးမေးလ်လင့်ခ်များသည် လမ်းကြောင်းများပြင်ဆင်ပြီးမှသာ ပေါ်လာပါမည်။' } },
+  { id: 'group', question: { en: 'Can I ask about group travel?', my: 'အဖွဲ့လိုက်ခရီးအကြောင်း မေးနိုင်ပါသလား?' }, answer: { en: 'Yes. Add the group size and the travel context to your inquiry.', my: 'မေးနိုင်ပါသည်။ အဖွဲ့အရွယ်အစားနှင့် ခရီးအကြောင်းအရာကို မေးမြန်းမှုတွင် ထည့်ပါ။' } },
 ];
 
-export const testimonials: Testimonial[] = [
-  { id: 'placeholder', quote: { en: 'Testimonials will be added when approved customer feedback is available.', my: 'အတည်ပြုထားသော ဖောက်သည်တုံ့ပြန်ချက်ရရှိသောအခါ ထည့်သွင်းပါမည်။' }, attribution: { en: 'Placeholder content', my: 'နေရာယူစာသား' }, isPlaceholder: true },
-];
-
-export const promoContent: PromoContent = {
-  title: { en: 'A thoughtful start to every journey.', my: 'ခရီးတိုင်းအတွက် စဉ်းစားပေးထားသော အစပြုမှု။' },
-  description: { en: 'Use the configured inquiry channels to discuss your next route. No live pricing or availability is represented here.', my: 'နောက်ထပ်ခရီးစဉ်အကြောင်း ပြင်ဆင်ထားသော မေးမြန်းမှုလမ်းကြောင်းများမှ ဆွေးနွေးပါ။ ဤနေရာတွင် တိုက်ရိုက်စျေးနှုန်း သို့မဟုတ် ရရှိနိုင်မှုကို မဖော်ပြပါ။' },
-  image: assetConfig.promo,
-  videoUrl: '',
-};
+export type LanguageValue<T> = T extends Record<Language, string> ? T : never;
