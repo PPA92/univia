@@ -14,7 +14,7 @@ export default {
       },
       fontFamily: {
         sans: ['var(--font-sans)', 'Inter', 'Arial', 'sans-serif'],
-        myanmar: ['var(--font-myanmar)', 'Noto Sans Myanmar', 'Myanmar Text', 'sans-serif'],
+        myanmar: ['var(--font-myanmar)', 'Cherry Unicode', 'Myanmar Text', 'Noto Sans Myanmar', 'sans-serif'],
       },
       boxShadow: {
         card: '0 18px 50px rgb(16 42 67 / 0.08)',

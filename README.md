@@ -42,6 +42,12 @@ The official SVGs supplied in `svgs/` are copied byte-for-byte into `public/bran
 
 The current photo catalog uses Unsplash URLs as clearly configured stand-ins. Each photo record includes its subject, source, stand-in status, source label, and credit URL. The footer discloses the stand-in material and opens the source list. Replace each record with owned or approved travel photography before launch, and retain the applicable licence evidence.
 
+## Myanmar font attribution
+
+Myanmar-language content uses the locally vendored `public/fonts/Cherry_Unicode.ttf` font with `font-display: swap`. The file was obtained from [AungMyoKyaw/Myanmar-Unicode-Fonts/CherryUnicode](https://github.com/AungMyoKyaw/Myanmar-Unicode-Fonts/tree/master/CherryUnicode) and its source checksum is `ffce56b05aa7f821b50af89b821a4ae88a0607febe4e5bc8c1eced43df203d7c`. The font metadata credits Sai Aung Murng, Sao Su Kham, and `www.shaniit.org`.
+
+The source repository does not state a license or redistribution terms for Cherry Unicode. This vendored copy is provisional. Verify permission with the copyright holder before any public release or redistribution.
+
 ## Scope
 
 This repository is a static frontend. It has no API route, database, authentication, payment integration, airline booking engine, or external deployment automation. External Vercel resources are not changed by the project.
