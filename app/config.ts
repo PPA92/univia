@@ -1,11 +1,14 @@
+export type PhotoSource = 'brand-package' | 'library-stand-in';
+
 export type PhotoRecord = {
   id: string;
   url: string;
   subject: string;
-  source: 'library-stand-in';
-  standIn: true;
+  source: PhotoSource;
+  standIn: boolean;
   sourceLabel: string;
-  creditUrl: string;
+  creditUrl?: string;
+  rightsNote?: string;
 };
 
 export const siteConfig = {
@@ -29,19 +32,19 @@ export const contactConfig = {
 const unsplash = (id: string, width = 1600) => `https://images.unsplash.com/${id}?auto=format&fit=crop&w=${width}&q=84`;
 
 export const travelPhotos = {
-  hero: { id: 'hero-airport', url: unsplash('photo-1436491865332-7a61a109cc05'), subject: 'aircraft above clouds' },
+  hero: { id: 'hero-mount-fuji', url: '/brand-package/photos/japan-mount-fuji.jpg', subject: 'Mount Fuji and spring blossoms' },
   inquiry: { id: 'inquiry-terminal', url: unsplash('photo-1517479149777-5f3b1511d5ad'), subject: 'airport departure board' },
   about: { id: 'about-travelers', url: unsplash('photo-1527631746610-bca00a040d60'), subject: 'travelers on a mountain route' },
   process: { id: 'process-map', url: unsplash('photo-1488646953014-85cb44e25828'), subject: 'open travel map' },
   contact: { id: 'contact-terminal', url: unsplash('photo-1542296332-2e4473faf563'), subject: 'aircraft at a terminal' },
-  destinationHero: { id: 'destination-bridge', url: unsplash('photo-1493976040374-85c8e12f0c0e'), subject: 'city bridge and skyline' },
+  destinationHero: { id: 'destination-wat-arun', url: '/brand-package/photos/thailand-wat-arun.jpg', subject: 'Wat Arun at sunset' },
   destinations: {
-    bangkok: { id: 'bangkok-city', url: unsplash('photo-1508009603885-50cf7c579365', 1000), subject: 'Bangkok city and temple roof' },
+    bangkok: { id: 'bangkok-wat-arun', url: '/brand-package/photos/thailand-wat-arun.jpg', subject: 'Wat Arun at sunset' },
     singapore: { id: 'singapore-skyline', url: unsplash('photo-1525625293386-3f8f99389edd', 1000), subject: 'Singapore skyline' },
-    kualaLumpur: { id: 'kuala-lumpur', url: unsplash('photo-1596422846543-75c6fc197f07', 1000), subject: 'Kuala Lumpur skyline' },
+    kualaLumpur: { id: 'kuala-lumpur-petronas', url: '/brand-package/photos/malaysia-petronas-towers.jpg', subject: 'Petronas Towers at dusk' },
     dubai: { id: 'dubai-skyline', url: unsplash('photo-1512453979798-5ea266f8880c', 1000), subject: 'Dubai skyline' },
     tokyo: { id: 'tokyo-street', url: unsplash('photo-1540959733332-eab4deabeeaf', 1000), subject: 'Tokyo street and skyline' },
-    seoul: { id: 'seoul-city', url: unsplash('photo-1436491865332-7a61a109cc05'), subject: 'aircraft above clouds' },
+    seoul: { id: 'seoul-tower', url: '/brand-package/photos/south-korea-seoul-tower.jpg', subject: 'N Seoul Tower in autumn' },
     phuket: { id: 'phuket-coast', url: unsplash('photo-1589394815804-964ed0be2eb5', 1000), subject: 'Phuket coastline' },
     yangon: { id: 'yangon-street', url: unsplash('photo-1518005020951-eccb494ad742', 1000), subject: 'Yangon street and pagoda' },
     mandalay: { id: 'mandalay-temple', url: unsplash('photo-1548013146-72479768bada', 1000), subject: 'Mandalay temple architecture' },
@@ -60,7 +63,9 @@ export type TravelPhoto = (typeof travelPhotos)[keyof typeof travelPhotos] exten
 export const photoCatalog: PhotoRecord[] = Object.values(travelPhotos).flatMap((entry) => {
   if ('url' in entry) return [entry];
   return Object.values(entry);
-}).map((photo) => ({ ...photo, source: 'library-stand-in' as const, standIn: true, sourceLabel: 'Unsplash', creditUrl: 'https://unsplash.com' }));
+}).map((photo) => photo.url.startsWith('/brand-package/')
+  ? { ...photo, source: 'brand-package' as const, standIn: false, sourceLabel: 'UNIVIA brand package, supplied in univiaReels-main/photos-src', rightsNote: 'The source package notes that photo rights are unconfirmed.' }
+  : { ...photo, source: 'library-stand-in' as const, standIn: true, sourceLabel: 'Unsplash', creditUrl: 'https://unsplash.com' });
 
 export type AssetConfig = typeof travelPhotos;
 export type ContactChannel = 'whatsapp' | 'mailto';

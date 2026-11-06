@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   title: { default: `${siteConfig.brandName} | ${siteConfig.tagline}`, template: `%s | ${siteConfig.brandName}` },
   description: siteConfig.description,
   alternates: { canonical: '/' },
-  icons: { icon: [{ url: '/brand/univia-mark-black.svg', type: 'image/svg+xml' }], shortcut: '/brand/univia-mark-black.svg', apple: '/brand/univia-mark-black.svg' },
+  icons: { icon: [{ url: '/brand-package/univia-mark-one-color.svg', type: 'image/svg+xml' }], shortcut: '/brand-package/univia-mark-one-color.svg', apple: '/brand-package/univia-mark-one-color.svg' },
   openGraph: { type: 'website', locale: 'en_US', alternateLocale: ['my_MM'], siteName: siteConfig.brandName, title: `${siteConfig.brandName} | ${siteConfig.tagline}`, description: siteConfig.description, url: siteConfig.publicUrl, images: [{ url: assetConfig.socialShare, width: 1200, height: 630, alt: `${siteConfig.brandName} travel and airline ticketing` }] },
   twitter: { card: 'summary_large_image', title: `${siteConfig.brandName} | ${siteConfig.tagline}`, description: siteConfig.description, images: [assetConfig.socialShare] },
 };

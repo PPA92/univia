@@ -163,6 +163,7 @@ h3 { font-size: 21px; line-height: 1.15; }
 .credits { margin-top: 20px; color: rgb(251 250 245 / .72); font-size: 13px; }
 .credits summary { cursor: pointer; }
 .credits a { display: block; margin-top: 8px; text-decoration: underline; }
+.credits-note { display: block; max-width: 260px; margin-top: 10px; color: rgb(251 250 245 / .65); font-size: 12px; line-height: 1.45; }
 .footer-legal { display: flex; justify-content: space-between; gap: 24px; padding-block: 18px; border-top: 1px solid rgb(251 250 245 / .18); color: rgb(251 250 245 / .6); font-size: 12px; }
 .phone-actionbar { display: none; }
 .contact-layout { padding-block: 112px; }
