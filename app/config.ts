@@ -18,12 +18,12 @@ export const siteConfig = {
 } as const;
 
 export const contactConfig = {
-  phoneDisplay: '',
-  whatsappNumber: '',
-  email: '',
-  officeAddress: '',
-  facebookUrl: '',
-  businessHours: '',
+  phoneDisplay: process.env.NEXT_PUBLIC_PHONE_DISPLAY ?? '',
+  whatsappNumber: process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? '',
+  email: process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? '',
+  officeAddress: process.env.NEXT_PUBLIC_OFFICE_ADDRESS ?? '',
+  facebookUrl: process.env.NEXT_PUBLIC_FACEBOOK_URL ?? '',
+  businessHours: process.env.NEXT_PUBLIC_BUSINESS_HOURS ?? '',
 } as const;
 
 const unsplash = (id: string, width = 1600) => `https://images.unsplash.com/${id}?auto=format&fit=crop&w=${width}&q=84`;
@@ -41,7 +41,7 @@ export const travelPhotos = {
     kualaLumpur: { id: 'kuala-lumpur', url: unsplash('photo-1596422846543-75c6fc197f07', 1000), subject: 'Kuala Lumpur skyline' },
     dubai: { id: 'dubai-skyline', url: unsplash('photo-1512453979798-5ea266f8880c', 1000), subject: 'Dubai skyline' },
     tokyo: { id: 'tokyo-street', url: unsplash('photo-1540959733332-eab4deabeeaf', 1000), subject: 'Tokyo street and skyline' },
-    seoul: { id: 'seoul-city', url: unsplash('photo-1538485399081-7c897b4d7f0a', 1000), subject: 'Seoul city skyline' },
+    seoul: { id: 'seoul-city', url: unsplash('photo-1436491865332-7a61a109cc05'), subject: 'aircraft above clouds' },
     phuket: { id: 'phuket-coast', url: unsplash('photo-1589394815804-964ed0be2eb5', 1000), subject: 'Phuket coastline' },
     yangon: { id: 'yangon-street', url: unsplash('photo-1518005020951-eccb494ad742', 1000), subject: 'Yangon street and pagoda' },
     mandalay: { id: 'mandalay-temple', url: unsplash('photo-1548013146-72479768bada', 1000), subject: 'Mandalay temple architecture' },

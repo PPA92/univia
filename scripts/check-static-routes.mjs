@@ -1,4 +1,5 @@
 const baseUrl = (process.env.STATIC_CHECK_URL ?? 'http://127.0.0.1:3000').replace(/\/$/, '');
+const expectedOrigin = new URL(process.env.NEXT_PUBLIC_SITE_URL ?? 'https://univia.example').origin;
 const routes = ['/', '/about', '/air-tickets', '/destinations', '/services', '/faq', '/contact'];
 
 function assert(condition, message) {
@@ -40,7 +41,7 @@ for (const route of routes) {
 
 const sitemap = await pageFor('/sitemap.xml');
 for (const route of routes) {
-  const expected = route === '/' ? '<loc>https://univia.example/</loc>' : `<loc>https://univia.example${route}</loc>`;
+  const expected = route === '/' ? `<loc>${expectedOrigin}/</loc>` : `<loc>${expectedOrigin}${route}</loc>`;
   assert(sitemap.includes(expected), `sitemap.xml: missing ${route}`);
 }
 

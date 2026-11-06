@@ -30,8 +30,8 @@ For visual QA, serve the production result over HTTP and run the installed Desig
 Review `app/config.ts` before launch:
 
 - Set `NEXT_PUBLIC_SITE_URL` to the final public origin.
-- Set `contactConfig.whatsappNumber` and `contactConfig.email` only when those channels are ready.
-- Add approved office address, business hours, phone display value, or Facebook URL only when supplied by the UNIVIA team.
+- Set `NEXT_PUBLIC_WHATSAPP_NUMBER` and `NEXT_PUBLIC_CONTACT_EMAIL` only when those channels are ready.
+- Add approved `NEXT_PUBLIC_OFFICE_ADDRESS`, `NEXT_PUBLIC_BUSINESS_HOURS`, `NEXT_PUBLIC_PHONE_DISPLAY`, or `NEXT_PUBLIC_FACEBOOK_URL` values only when supplied by the UNIVIA team.
 - Replace the `travelPhotos` library records with UNIVIA-owned or licensed photography when available.
 
 Empty contact values stay absent from the visible interface and keep forms non-actionable. The forms prepare URL-encoded WhatsApp or email inquiries in the browser. They do not submit to a backend and do not complete a booking.
